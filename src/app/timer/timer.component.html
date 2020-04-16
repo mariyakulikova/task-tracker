@@ -1,0 +1,16 @@
+<p>timer works!</p>
+<div class="timer">
+  <div class="header">
+    <span>Timer</span>
+    <div>{{t | async}}</div>
+  </div>
+  <input class="timer-input" type="text" [(ngModel)]="title" placeholder="{{title}}">
+  <div class="container-button">
+    <button *ngIf="!started; else pause"
+      (click)="onClickStart()" class="timer-button">Start</button>
+    <ng-template #pause>
+      <button (click)="onClickPause()" class="timer-button">Pause</button>
+    </ng-template>
+    <button class="timer-button">Save</button>
+  </div>
+</div>
