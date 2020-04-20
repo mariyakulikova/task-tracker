@@ -1,6 +1,5 @@
 .container {
   font-family: Arial;
-
   color: #3C3D40;
   box-sizing: border-box;
   background: #EEF3FE;
@@ -17,7 +16,7 @@
 button {
   box-sizing: border-box;
   color: #FFF;
-  width: 100%;
+  width: 40%;
   padding: 10px;
   border-radius: 20px;
   font-size: 15px;
@@ -36,16 +35,6 @@ button:hover {
   color: #3C3D40;
 }
 
-textarea {
-  width: 100%;
-  background: #EEF3FE;
-  border: 1px solid #B4B7BF;
-  outline: none;
-  border-radius: 5px;
-  margin: 20px 0 20px 0;
-  color: #3C3D40;
-}
-
 input {
   width: 100%;
   background: #EEF3FE;
@@ -59,27 +48,54 @@ input {
 }
 
 small {
-  font-family: Arial;
   color: #B4B7BF;
-}
-
-button:nth-child(odd) {
-  display: none;
-}
-
-.container__timer {
-  color: #3C3D40;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
   font-weight: bold;
-  font-size:larger;
-  border-radius: 5px;
-  background: #FFFFFF;
-  text-transform: uppercase;
-  width: 48%;
-  height: 20%;
-  padding: 0 20px 0 20px;
+}
+
+textarea {
+  width: 100%;
+  background: #EEF3FE;
   border: 1px solid #B4B7BF;
-  margin-bottom: 30px;
+  outline: none;
+  border-radius: 5px;
+  color: #3C3D40;
+}
+
+.container__inner {
+  width: 100%;
+
+}
+.duration {
+  border: 1px solid #B4B7BF;
+  height: 20px;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.container__button {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+span {
+  font-weight: bold;
+  font-size: large;
+  padding-bottom: 10px;
+}
+
+.span {
+  border-bottom: 1px solid #B4B7BF;
+}
+
+.container__time {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.from_to {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
 }

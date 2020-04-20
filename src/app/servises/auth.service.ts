@@ -22,8 +22,8 @@ export class AuthService {
   singInGoogle() {
     firebase.auth().signInWithPopup(this.provider).then(result => {
       console.log('success', result.user.email);
-      const token = result.credential.accessToken;
-      this.user = result.user;
+      // const token = result.credential.accessToken;
+      // this.user = result.user;
     }).catch(e => {
       console.log('Something went wrong:', e.message);
       const errorCode = e.code;

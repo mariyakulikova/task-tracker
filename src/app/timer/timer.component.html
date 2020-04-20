@@ -1,16 +1,30 @@
-<p>timer works!</p>
-<div class="timer">
-  <div class="header">
-    <span>Timer</span>
-    <div>{{t | async}}</div>
+<div class="container">
+  <div class="container__timer">
+    <span>time:</span>
+    <div class="tick_tack">00:10</div>
   </div>
-  <input class="timer-input" type="text" [(ngModel)]="title" placeholder="{{title}}">
-  <div class="container-button">
-    <button *ngIf="!started; else pause"
-      (click)="onClickStart()" class="timer-button">Start</button>
-    <ng-template #pause>
-      <button (click)="onClickPause()" class="timer-button">Pause</button>
-    </ng-template>
-    <button class="timer-button">Save</button>
+  <div>
+    <small>Task</small>
+    <input type="text" class="task_name" >
   </div>
+
+    <textarea class="notes" name="" id="" cols="30" rows="10" placeholder="Notes (optional)"></textarea>
+  <button>
+<!--    <span class="material-icons">-->
+<!--    play_arrow-->
+<!--    </span>-->
+    start
+  </button>
+  <button>
+<!--    <span class="material-icons">-->
+<!--    pause-->
+<!--    </span>-->
+    pause
+   </button>
+  <button>
+<!--    <span class="material-icons">-->
+<!--    save-->
+<!--    </span>-->
+    stop
+  </button>
 </div>

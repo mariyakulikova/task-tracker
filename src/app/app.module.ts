@@ -6,14 +6,22 @@ import { AppComponent } from './app.component';
 import {environment} from '../environments/environment';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AuthService } from './auth.service';
+import { AuthService } from './servises/auth.service';
 import {FormsModule} from '@angular/forms';
 import { TimerComponent } from './timer/timer.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { EditComponent } from './edit/edit.component';
+import { WeekPreviewComponent } from './week-preview/week-preview.component';
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TimerComponent
+    TimerComponent,
+    SidebarComponent,
+    EditComponent,
+    WeekPreviewComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,

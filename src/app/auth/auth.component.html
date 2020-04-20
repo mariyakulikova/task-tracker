@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="button button-google"
+       (click)="singInWithGoogle()">
+    log in with Google</div>
+  <hr>
+  <span class="text">OR</span>
+  <input class="input" type="email" placeholder="email" [(ngModel)]="email">
+  <input class="input" type="password" placeholder="password" [(ngModel)]="password">
+  <div class="container-button">
+    <div class="button" (click)="login()">Log in</div>
+    <div class="button" (click)="signUp()">Sing up</div>
+  </div>
+
+
+</div>
