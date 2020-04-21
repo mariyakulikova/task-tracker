@@ -39,3 +39,8 @@
   align-self: flex-start;
   width: 100px;
 }
+
+.active {
+  background: #B4B7BF;
+  color: #FFFFFF;
+}

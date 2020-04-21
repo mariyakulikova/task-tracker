@@ -1,17 +1,17 @@
 <nav class="navbar">
-  <a class="navbar__link" href="">
+  <a routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="navbar__link" [routerLink]="['/calendar']">
     <span class="material-icons">
       event
     </span>
     Calendar
   </a>
-  <a class="navbar__link" href="">
+  <a routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="navbar__link" [routerLink]="['/timer']">
     <span class="material-icons">
       timer
     </span>
     Timer
   </a>
-  <a class="navbar__link" href="">
+  <a routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="navbar__link" [routerLink]="['/edit']">
     <span class="material-icons">
       alarm_add
     </span>

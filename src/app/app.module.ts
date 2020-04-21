@@ -14,6 +14,7 @@ import { EditComponent } from './edit/edit.component';
 import { WeekPreviewComponent } from './week-preview/week-preview.component';
 import { AuthComponent } from './auth/auth.component';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AngularFirestore } from 'angularfire2/firestore';
     SidebarComponent,
     EditComponent,
     WeekPreviewComponent,
-    AuthComponent
+    AuthComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

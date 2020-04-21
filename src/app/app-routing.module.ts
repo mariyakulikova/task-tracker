@@ -4,6 +4,7 @@ import {AuthComponent} from './auth/auth.component';
 import {WeekPreviewComponent} from './week-preview/week-preview.component';
 import {TimerComponent} from './timer/timer.component';
 import {EditComponent} from './edit/edit.component';
+import {NotFoundComponent} from './not-found/not-found.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,14 @@ const routes: Routes = [
   {
     path: 'edit',
     component: EditComponent
+  },
+  {
+    path: 'error',
+    component: NotFoundComponent
+  },
+  {
+    path: '**',
+    redirectTo: '/error'
   }
 ];
 
