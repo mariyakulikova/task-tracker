@@ -7,12 +7,13 @@ import {environment} from '../environments/environment';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthService } from './servises/auth.service';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { TimerComponent } from './timer/timer.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { EditComponent } from './edit/edit.component';
 import { WeekPreviewComponent } from './week-preview/week-preview.component';
 import { AuthComponent } from './auth/auth.component';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 @NgModule({
   declarations: [
@@ -28,9 +29,10 @@ import { AuthComponent } from './auth/auth.component';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, AngularFirestore],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

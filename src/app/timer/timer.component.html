@@ -1,30 +1,31 @@
 <div class="container">
   <div class="container__timer">
     <span>time:</span>
-    <div class="tick_tack">00:10</div>
+    <div class="tick_tack">{{timer | async}}</div>
   </div>
-  <div>
-    <small>Task</small>
-    <input type="text" class="task_name" >
-  </div>
+  <form [formGroup]="form" >
+    <div>
+      <small>Task</small>
+      <input [formControlName]="'title'" type="text" class="task_name"
+             [class.is-invalid]="form.get('title').invalid && form.get('title').touched">
+    </div>
+    <div>
+      <small>Notes (optional)</small>
+      <textarea [formControlName]="'comment'"
+                [(ngModel)]="comment" class="notes" name="" id="" cols="30" rows="8"></textarea>
+    </div>
+  </form>
+    <button *ngIf="showStartButton()" (click)="onClickStart()">
+      start
+    </button>
+    <button *ngIf="showPauseButton()" (click)="onClickPause()">
+      pause
+    </button>
+    <button *ngIf="showResumeButton()" (click)="onClickResume()">
+      resume
+    </button>
+    <button (click)="onClickStop()">
+      stop
+    </button>
 
-    <textarea class="notes" name="" id="" cols="30" rows="10" placeholder="Notes (optional)"></textarea>
-  <button>
-<!--    <span class="material-icons">-->
-<!--    play_arrow-->
-<!--    </span>-->
-    start
-  </button>
-  <button>
-<!--    <span class="material-icons">-->
-<!--    pause-->
-<!--    </span>-->
-    pause
-   </button>
-  <button>
-<!--    <span class="material-icons">-->
-<!--    save-->
-<!--    </span>-->
-    stop
-  </button>
 </div>
