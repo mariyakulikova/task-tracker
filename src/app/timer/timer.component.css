@@ -1,6 +1,5 @@
 .container {
   font-family: Arial;
-
   color: #3C3D40;
   box-sizing: border-box;
   background: #EEF3FE;
@@ -12,6 +11,11 @@
   justify-content: space-between;
   align-items: center;
   padding: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%)
 }
 
 button {
