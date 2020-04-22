@@ -17,7 +17,7 @@
     </span>
     Log time
   </a>
-  <a class="navbar__link" href="">
+  <a class="navbar__link" [routerLink]="'/'" (click)="onLogOut()" *ngIf="showLogOut()">
     <span class="material-icons">
       exit_to_app
     </span>

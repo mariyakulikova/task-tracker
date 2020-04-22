@@ -2,34 +2,29 @@ import { Injectable } from '@angular/core';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
-
-import { Observable } from 'rxjs';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  user: Observable<firebase.User>;
+  private user: firebase.User;
+  private authenticated = false;
 
   provider = new firebase.auth.GoogleAuthProvider();
 
-  constructor(private firebaseAuth: AngularFireAuth) {
-    // this.user = firebaseAuth.authState;
-    this.user = firebaseAuth.user;
-  }
+  constructor(
+    private firebaseAuth: AngularFireAuth,
+    private router: Router) { }
 
-
+  // TODO process errors
   singInGoogle() {
     firebase.auth().signInWithPopup(this.provider).then(result => {
-      console.log('success', result.user.email);
-      // const token = result.credential.accessToken;
-      // this.user = result.user;
+      this.user = this.firebaseAuth.auth.currentUser;
+      this.authenticated = true;
+      this.router.navigate(['/calendar']);
     }).catch(e => {
       console.log('Something went wrong:', e.message);
-      const errorCode = e.code;
-      const errorMessage = e.message;
-      const email = e.email;
-      const credential = e.credential;
     });
   }
 
@@ -38,19 +33,24 @@ export class AuthService {
       .auth
       .createUserWithEmailAndPassword(email, password)
       .then(value => {
-        console.log('Success!', value);
+        this.user = this.firebaseAuth.auth.currentUser; // TODO process sing up user
+        console.log('Success!', this.user);
       })
       .catch(err => {
         console.log('Something went wrong:', err.message);
       });
   }
 
+  // TODO process errors
   login(email: string, password: string) {
     this.firebaseAuth
       .auth
       .signInWithEmailAndPassword(email, password)
       .then(value => {
-        console.log('Nice, it worked!');
+        this.user = this.firebaseAuth.auth.currentUser;
+        this.authenticated = true;
+        this.router.navigate(['/calendar']);
+        console.log('Nice, it worked!', this.user);
       })
       .catch(err => {
         console.log('Something went wrong:', err.message);
@@ -61,8 +61,16 @@ export class AuthService {
     this.firebaseAuth
       .auth
       .signOut().then(data => {
-        console.log('success logout');
+      this.authenticated = false;
     });
+  }
+
+  get isAuthenticated(): boolean {
+    return this.authenticated;
+  }
+
+  get currentUser(): firebase.User {
+    return this.user;
   }
 
 }

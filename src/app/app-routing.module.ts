@@ -5,6 +5,7 @@ import {WeekPreviewComponent} from './week-preview/week-preview.component';
 import {TimerComponent} from './timer/timer.component';
 import {EditComponent} from './edit/edit.component';
 import {NotFoundComponent} from './not-found/not-found.component';
+import {AuthGuard} from './servises/auth.guard';
 
 
 const routes: Routes = [
@@ -14,19 +15,23 @@ const routes: Routes = [
   },
   {
     path: 'calendar',
-    component: WeekPreviewComponent
+    component: WeekPreviewComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'timer',
-    component: TimerComponent
+    component: TimerComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'edit',
-    component: EditComponent
+    component: EditComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'error',
-    component: NotFoundComponent
+    component: NotFoundComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: '**',
