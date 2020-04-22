@@ -20,6 +20,10 @@ ul {
   display: flex;
   width: 100%;
 }
+.active {
+  background: #B4B7BF;
+  color: #FFFFFF;
+}
 
 li {
   box-sizing: border-box;
@@ -43,13 +47,13 @@ li:hover {
   color: #FFFFFF;
 }
 
-li:first-child {
-  border-radius: 20px 0 0 20px;
-}
+/*li:first-child {*/
+/*  border-radius: 20px 0 0 20px;*/
+/*}*/
 
-li:last-child {
-  border-radius: 0 20px 20px 0;
-}
+/*li:last-child {*/
+/*  border-radius: 0 20px 20px 0;*/
+/*}*/
 
 .calendar_nav {
   width: 150px;

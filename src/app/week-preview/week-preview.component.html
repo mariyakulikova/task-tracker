@@ -1,36 +1,19 @@
 <div class="container">
   <div class="container__inner">
     <div class="calendar_nav">
-      <span class="material-icons">
+      <span class="material-icons" (click)="onLeftArrow()">
       keyboard_arrow_left
       </span>
-      <span>April, 17th</span>
-      <span class="material-icons">
+      <span>{{date | date}}</span>
+      <span class="material-icons" (click)="onRightArrow()">
       keyboard_arrow_right
       </span>
     </div>
-    <ul>
-      <li>
-        <span>Mon</span>
+    <ul *ngFor="let day of arrDays; index as i">
+      <li [class.active]="i === date.getDay()">
+        <span>{{day}}</span>
       </li>
-      <li>
-        <span>Tue</span>
-      </li>
-      <li>
-        <span>Wen</span>
-      </li>
-      <li>
-        <span>Thu</span>
-      </li>
-      <li>
-        <span>Fri</span>
-      </li>
-      <li>
-        <span>Sat</span>
-      </li>
-      <li>
-        <span>Sun</span>
-      </li>
+
     </ul>
   </div>
   <div class="container_task">
@@ -77,4 +60,5 @@
 
 
 </div>
+
 
