@@ -1,7 +1,6 @@
 <div class="container">
   <div class="container__timer">
-    <span>time:</span>
-    <div class="tick_tack">{{timer | async}}</div>
+    <div class="tick_tack">{{duration | date:'mm:ss'}}</div>
   </div>
   <form [formGroup]="form" >
     <div>

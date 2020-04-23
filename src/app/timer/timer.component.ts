@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {TimerService} from '../servises/timer.service';
 import {FirestoreService} from '../servises/firestore.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
@@ -12,19 +12,24 @@ import {LogTime} from '../interfaces/logTime';
 })
 export class TimerComponent implements OnInit {
 
-  timer: Observable<any>;
+  timerSubscription: Subscription;
+  duration: Date;
   comment: string;
   timerState = 'not started';
   form: FormGroup;
   id: string;
 
-  constructor(private timerService: TimerService, private firestore: FirestoreService) {}
+  constructor(
+    private timerService: TimerService,
+    private firestore: FirestoreService
+  ) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
         title: new FormControl('', Validators.required),
         comment: new FormControl('')
     });
+    this.duration = new Date(2020, 0, 0, 0, 0, 0);
   }
 
   onClickStart() {
@@ -33,10 +38,11 @@ export class TimerComponent implements OnInit {
       return;
     }
     this.timerState = 'running';
-    this.timer = this.timerService.start();
+    this.startTimer();
     const log: LogTime = {
       name: this.form.value.title, start: new Date(), comment: this.form.value.comment
     }
+    console.log(log);
     this.id = this.firestore.addNewLog(log, new Date());
   }
 
@@ -44,19 +50,23 @@ export class TimerComponent implements OnInit {
     if (this.timerState === 'not started') {
       return;
     }
+    this.timerSubscription.unsubscribe();
     this.timerState = 'stopped';
     const date = new Date();
     this.firestore.addStopField(this.id, date);
     this.form.reset();
+    this.duration = new Date(2020, 0, 0, 0, 0, 0);
   }
 
   onClickPause() {
     this.timerState = 'paused';
+    this.timerSubscription.unsubscribe();
     this.firestore.updatePauseField(this.id, new Date());
   }
 
   onClickResume() {
     this.timerState = 'running';
+    this.startTimer();
     this.firestore.updatePauseField(this.id, new Date());
   }
 
@@ -72,5 +82,9 @@ export class TimerComponent implements OnInit {
     return this.timerState === 'paused';
   }
 
-
+  private startTimer() {
+    this.timerSubscription = this.timerService.start().subscribe(() => {
+      this.duration = new Date(this.duration.setSeconds(this.duration.getSeconds() + 1));
+    });
+  }
 }
