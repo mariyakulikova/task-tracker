@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="container__inner">
+  <div class="calendar">
     <div class="calendar_nav">
       <span class="material-icons" (click)="onLeftArrow()">
       keyboard_arrow_left
@@ -9,56 +9,39 @@
       keyboard_arrow_right
       </span>
     </div>
-    <ul *ngFor="let day of arrDays; index as i">
-      <li [class.active]="i === date.getDay()">
+    <ul >
+      <li *ngFor="let day of arrDays; index as i" [class.active]="i === date.getDay()">
         <span>{{day}}</span>
       </li>
-
     </ul>
   </div>
-  <div class="container_task">
 
-      <span class="task_name">Task name</span>
-      <div class="task_inner">
-        <span>Time: 00:10</span>
+  <h2 *ngIf="tasks.length === 0">There are no logged tasks</h2>
+  <div class="container_task" *ngFor="let task of tasks">
+    <div class="task_inner">
+      <span class="task_name">{{task.name}}</span>
+      <div class="duration">
+        <span>Duration: </span>
         <div class="edit_button">
           <span class="material-icons">
             edit
           </span>
         </div>
       </div>
-
-
-
-  </div>
-  <div class="add_info">
-    <div class="info">
-      <span>Started</span>
-      <span>20.07.2020 17:00</span>
     </div>
-    <div class="info">
-      <span>Ended</span>
-      <span>20.07.2020 17:10</span>
-    </div>
-  </div>
-
-  <div class="container_task">
-
-    <span class="task_name">Task name2</span>
-    <div class="task_inner">
-      <span>Time: 00:15</span>
-      <div class="edit_button">
-          <span class="material-icons">
-            edit
-          </span>
+    <div class="add_info">
+      <div class="info">
+        <span>Started</span>
+        <span>{{task.start.toDate() | date:'HH:mm'}}</span>
+      </div>
+      <div class="info">
+        <span>Ended</span>
+        <span>{{task.stop.toDate() |date:'HH:mm'}}</span>
       </div>
     </div>
-
-
+  </div>
 
   </div>
 
-
-</div>
 
 

@@ -9,7 +9,7 @@
   font-family: Arial;
 }
 
-.container__inner {
+.calendar {
   margin-bottom: 50px;
 }
 
@@ -36,24 +36,19 @@ li {
   font-size: larger;
   font-weight: bolder;
   color: #3C3D40;
-  cursor: pointer;
+  /*cursor: pointer;*/
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-li:hover {
-  background: #B4B7BF;
-  color: #FFFFFF;
+li:first-child {
+  border-radius: 20px 0 0 20px;
 }
 
-/*li:first-child {*/
-/*  border-radius: 20px 0 0 20px;*/
-/*}*/
-
-/*li:last-child {*/
-/*  border-radius: 0 20px 20px 0;*/
-/*}*/
+li:last-child {
+  border-radius: 0 20px 20px 0;
+}
 
 .calendar_nav {
   width: 150px;
@@ -71,21 +66,28 @@ li:hover {
 .container_task {
 
   box-sizing: border-box;
+  margin-bottom: 20px;
   padding: 10px 30px 10px 30px;
-  height: 40px;
   color: #3C3D40;
   font-weight: bold;
   display: flex;
-  width: 600px;
+  flex-direction: column;
+  width: 500px;
   background: #EEF3FE;
   border-radius: 30px;
   border: 1px solid #D8DCE6;
   justify-content: space-between;
   align-items: center;
-  cursor: pointer;
 }
 
 .task_inner {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.duration {
   display: flex;
   align-items: center;
 }
@@ -105,13 +107,10 @@ li:hover {
 }
 
 .add_info {
-  /*display: none;*/
-  width: 550px;
+  width: 100%;
   box-sizing: border-box;
   color: #3C3D40;
-  /*background: #EEF3FE;*/
   height: 65px;
-  padding: 8px;
 }
 
 .info {
@@ -119,5 +118,4 @@ li:hover {
   justify-content: space-between;
   font-weight: bold;
   padding-bottom: 10px;
-
 }

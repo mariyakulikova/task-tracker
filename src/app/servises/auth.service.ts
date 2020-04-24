@@ -22,6 +22,7 @@ export class AuthService {
     firebase.auth().signInWithPopup(this.provider).then(result => {
       this.user = this.firebaseAuth.auth.currentUser;
       this.authenticated = true;
+      console.log('current user: ', this.user);
       this.router.navigate(['/calendar']);
     }).catch(e => {
       console.log('Something went wrong:', e.message);
