@@ -41,14 +41,20 @@ export class WeekPreviewComponent implements OnInit{
     this.firestore.getTasks(this.auth.currentUser.uid, this.date)
       .subscribe(value => {
         value.forEach(v => {
-          // v.duration = this.countDuration(v.start, v.stop);
+          v.duration = this.countDuration(v.start, v.stop);
           this.tasks.push(v);
         });
       });
   }
 
-  private countDuration(start: firebase.firestore.Timestamp,
-                        stop: firebase.firestore.Timestamp): Date {
-    return new Date((stop.seconds * 1000 - start.seconds * 1000));
+  private countDuration(start: firebase.firestore.Timestamp | Date,
+                        stop: firebase.firestore.Timestamp | Date): Date {
+
+    const dif = stop.toMillis() - start.toMillis();
+    const date = new Date(dif);
+    date.setHours(date.getUTCHours());
+    date.setMinutes(date.getUTCMinutes());
+    date.setSeconds(date.getUTCSeconds());
+    return date;
   }
 }

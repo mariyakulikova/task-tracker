@@ -21,7 +21,7 @@
     <div class="task_inner">
       <span class="task_name">{{task.name}}</span>
       <div class="duration">
-        <span>Duration: </span>
+        <span>Duration: {{task.duration | date:'HH:mm:ss'}}</span>
         <div class="edit_button">
           <span class="material-icons">
             edit
@@ -32,11 +32,11 @@
     <div class="add_info">
       <div class="info">
         <span>Started</span>
-        <span>{{task.start.toDate() | date:'HH:mm'}}</span>
+        <span>{{task.start.toDate() | date:'HH:mm:ss'}}</span>
       </div>
       <div class="info">
         <span>Ended</span>
-        <span>{{task.stop.toDate() |date:'HH:mm'}}</span>
+        <span>{{task.stop.toDate() | date:'HH:mm:ss'}}</span>
       </div>
     </div>
   </div>
