@@ -16,22 +16,19 @@ export class FirestoreService {
     private auth: AuthService) {
   }
 
-  converter = {
-    toFirestore(log: LogTime): firebase.firestore.DocumentData {
-      if (log.comment !== '') {
-        return {
-          name: log.name,
-          start: log.start,
-        };
-      } else {
-        return {
-          name: log.name,
-          start: log.start,
-          comment: log.comment,
-        };
-      }
-    },
-  };
+  converter(log: LogTime) {
+    const logObj = {
+      name: log.name,
+      start: log.start,
+    };
+    if (log.comment !== '') {
+      Object.assign(logObj, {comment: log.comment});
+    }
+    if (log.stop) {
+      Object.assign(logObj, {stop: log.stop});
+    }
+    return logObj;
+  }
 
   private getDoc(id: string, date: Date): AngularFirestoreDocument<any> {
     return this.database
@@ -57,8 +54,8 @@ export class FirestoreService {
   }
 
   addNewLog(log: LogTime, date: Date): string {
-    let id = this.database.createId();
-    this.getDoc(id, date).set(this.converter.toFirestore(log));
+    const id = this.database.createId();
+    this.getDoc(id, date).set(this.converter(log));
     return id;
   }
 

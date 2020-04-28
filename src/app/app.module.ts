@@ -15,7 +15,6 @@ import { WeekPreviewComponent } from './week-preview/week-preview.component';
 import { AuthComponent } from './auth/auth.component';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { TimestampToDatePipe } from './pipes/timestamp-to-date.pipe';
 
 @NgModule({
   declarations: [
@@ -26,7 +25,6 @@ import { TimestampToDatePipe } from './pipes/timestamp-to-date.pipe';
     WeekPreviewComponent,
     AuthComponent,
     NotFoundComponent,
-    TimestampToDatePipe
   ],
   imports: [
     BrowserModule,

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FirestoreService} from '../servises/firestore.service';
 import {AuthService} from '../servises/auth.service';
 import {LogTime} from '../interfaces/logTime';
-import * as firebase from 'firebase';
+import {TimerService} from '../servises/timer.service';
 
 @Component({
   selector: 'app-week-preview',
@@ -17,7 +17,8 @@ export class WeekPreviewComponent implements OnInit{
 
   constructor(
     private firestore: FirestoreService,
-    private auth: AuthService) { }
+    private auth: AuthService,
+    private timer: TimerService) { }
 
   ngOnInit(): void {
     this.date = new Date();
@@ -41,20 +42,12 @@ export class WeekPreviewComponent implements OnInit{
     this.firestore.getTasks(this.auth.currentUser.uid, this.date)
       .subscribe(value => {
         value.forEach(v => {
-          v.duration = this.countDuration(v.start, v.stop);
+          v.duration = this.timer.countDuration(
+            v.start,
+            v.stop
+          );
           this.tasks.push(v);
         });
       });
-  }
-
-  private countDuration(start: firebase.firestore.Timestamp | Date,
-                        stop: firebase.firestore.Timestamp | Date): Date {
-
-    const dif = stop.toMillis() - start.toMillis();
-    const date = new Date(dif);
-    date.setHours(date.getUTCHours());
-    date.setMinutes(date.getUTCMinutes());
-    date.setSeconds(date.getUTCSeconds());
-    return date;
   }
 }

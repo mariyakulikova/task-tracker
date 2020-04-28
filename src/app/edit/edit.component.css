@@ -42,7 +42,7 @@ button:hover {
 
 input {
   width: 100%;
-  background: #EEF3FE;
+  background: #FFFFFF;
   border: 1px solid #B4B7BF;
   border-radius: 3px;
   height: 20px;
@@ -59,7 +59,7 @@ small {
 
 textarea {
   width: 100%;
-  background: #EEF3FE;
+  background: #FFFFFF;
   border: 1px solid #B4B7BF;
   outline: none;
   border-radius: 5px;
@@ -71,6 +71,7 @@ textarea {
 
 }
 .duration {
+  background: #FFFFFF;
   border: 1px solid #B4B7BF;
   height: 20px;
   width: 100%;
@@ -103,4 +104,8 @@ span {
   width: 45%;
   display: flex;
   flex-direction: column;
+}
+
+.is-invalid {
+  border: 1px solid red;
 }
