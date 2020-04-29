@@ -12,7 +12,6 @@ import {TimerService} from '../servises/timer.service';
 export class EditComponent implements OnInit {
 
   form: FormGroup;
-  duration: Date;
 
   constructor(
     private firestore: FirestoreService,
@@ -23,9 +22,9 @@ export class EditComponent implements OnInit {
     this.form = new FormGroup({
       name: new FormControl(null, Validators.required),
       note: new FormControl(null),
-      date: new FormControl(null,
+      date: new FormControl(this.getDatePlaceholder(),
         Validators.required),
-      start: new FormControl(null, Validators.required),
+      start: new FormControl(this.getTimePlaceholder(), Validators.required),
       stop: new FormControl(null, Validators.required)
       }
     );
@@ -44,7 +43,7 @@ export class EditComponent implements OnInit {
       comment: this.form.value.note
     }
     this.firestore.addNewLog(log, log.start as Date);
-    this.duration = this.timer.countDuration(log.start as Date, log.stop as Date);
+    console.log(this.form.value);
     this.form.reset();
   }
 
@@ -52,4 +51,11 @@ export class EditComponent implements OnInit {
     this.form.reset();
   }
 
+  private getDatePlaceholder(): string {
+    return new Date().toLocaleDateString('fr-CA');
+  }
+
+  private getTimePlaceholder(): string {
+    return new Date().toLocaleTimeString().slice(0, 5);
+  }
 }
