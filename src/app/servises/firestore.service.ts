@@ -77,6 +77,7 @@ export class FirestoreService {
         return snapshots.docs
           .map(doc => {
             const task = doc.data();
+            Object.assign(task, {id: doc.id});
             return task as LogTime;
           })
           .filter(task => task.hasOwnProperty('stop'));

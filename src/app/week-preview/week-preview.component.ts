@@ -9,7 +9,7 @@ import {TimerService} from '../servises/timer.service';
   templateUrl: './week-preview.component.html',
   styleUrls: ['./week-preview.component.css']
 })
-export class WeekPreviewComponent implements OnInit{
+export class WeekPreviewComponent implements OnInit {
 
   date: Date = new Date();
   arrDays: string[] = ['sun', 'mon', 'tue', 'wen', 'thu', 'fri', 'sat'];
@@ -18,7 +18,8 @@ export class WeekPreviewComponent implements OnInit{
   constructor(
     private firestore: FirestoreService,
     private auth: AuthService,
-    private timer: TimerService) { }
+    private timer: TimerService) {
+  }
 
   ngOnInit(): void {
     this.date = new Date();
@@ -27,9 +28,9 @@ export class WeekPreviewComponent implements OnInit{
   }
 
   onLeftArrow() {
-   this.date = new Date(this.date.setDate(this.date.getDate() - 1));
-   this.tasks.splice(0, this.tasks.length);
-   this.setTasks();
+    this.date = new Date(this.date.setDate(this.date.getDate() - 1));
+    this.tasks.splice(0, this.tasks.length);
+    this.setTasks();
   }
 
   onRightArrow() {
