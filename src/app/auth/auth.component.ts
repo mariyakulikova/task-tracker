@@ -6,32 +6,39 @@ import {AuthService} from '../servises/auth.service';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css']
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent {
 
   email: string;
   password: string;
+  hasError = false;
+  errorMessage: string;
   title = 'task-tracker';
 
   constructor(public authService: AuthService) {}
 
   signUp() {
-    this.authService.signUp(this.email, this.password);
+    this.authService.signUp(this.email, this.password)
+      .catch(err => {
+        this.hasError = true;
+        this.errorMessage = err.message;
+      });
     this.email = this.password = '';
   }
 
   login() {
-    this.authService.login(this.email, this.password);
+    this.authService.login(this.email, this.password)
+      .catch(err => {
+        this.hasError = true;
+        this.errorMessage = err.message;
+      });
     this.email = this.password = '';
   }
 
-  logout() {
-    this.authService.logout();
-  }
   singInWithGoogle() {
-    this.authService.singInGoogle();
+    this.authService.singInGoogle()
+      .catch(err => {
+        this.hasError = true;
+        this.errorMessage = err.message;
+      });
   }
-
-  ngOnInit(): void {
-  }
-
 }

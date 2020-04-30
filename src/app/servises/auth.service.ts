@@ -17,44 +17,31 @@ export class AuthService {
     private firebaseAuth: AngularFireAuth,
     private router: Router) { }
 
-  // TODO process errors
-  singInGoogle() {
-    firebase.auth().signInWithPopup(this.provider).then(result => {
+  singInGoogle(): Promise<any> {
+    return firebase.auth().signInWithPopup(this.provider).then(result => {
       this.user = this.firebaseAuth.auth.currentUser;
       this.authenticated = true;
-      console.log('current user: ', this.user);
       this.router.navigate(['/calendar']);
-    }).catch(e => {
-      console.log('Something went wrong:', e.message);
     });
   }
 
-  signUp(email: string, password: string) {
-    this.firebaseAuth
+  signUp(email: string, password: string): Promise<any> {
+    return this.firebaseAuth
       .auth
       .createUserWithEmailAndPassword(email, password)
       .then(value => {
         this.user = this.firebaseAuth.auth.currentUser; // TODO process sing up user
-        console.log('Success!', this.user);
-      })
-      .catch(err => {
-        console.log('Something went wrong:', err.message);
       });
   }
 
-  // TODO process errors
-  login(email: string, password: string) {
-    this.firebaseAuth
+  login(email: string, password: string): Promise<any> {
+    return this.firebaseAuth
       .auth
       .signInWithEmailAndPassword(email, password)
       .then(value => {
         this.user = this.firebaseAuth.auth.currentUser;
         this.authenticated = true;
         this.router.navigate(['/calendar']);
-        console.log('Nice, it worked!', this.user);
-      })
-      .catch(err => {
-        console.log('Something went wrong:', err.message);
       });
   }
 

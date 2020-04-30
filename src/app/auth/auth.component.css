@@ -1,5 +1,5 @@
 * {
-  font-family: Roboto;
+  font-family: Arial;
 }
 
 .container {
@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 40px;
+  padding: 20px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -31,7 +31,6 @@
   border: none;
   border-bottom: 1px solid #B4B7BF;
   height: 20px;
-  font-family: Arial;
   outline: none;
 }
 
@@ -68,7 +67,6 @@
 
 .text {
   width: 30px;
-  font-family: Arial;
   margin: -32px auto 10px;
   background: #EEF3FE;
 
@@ -88,7 +86,11 @@
 hr {
   margin-top: 20px;
   width: 80%;
+}
 
+.firebaseui-error {
+  color: red;
+  height: 30px;
 }
 
 
