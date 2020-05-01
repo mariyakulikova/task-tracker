@@ -10,8 +10,8 @@
     </div>
     <div>
       <small>Notes (optional)</small>
-      <textarea [formControlName]="'comment'"
-                [(ngModel)]="comment" class="notes" name="" id="" cols="30" rows="8"></textarea>
+      <textarea [formControlName]="'note'"
+                class="notes" name="" id="" cols="30" rows="8"></textarea>
     </div>
   </form>
     <button *ngIf="showStartButton()" (click)="onClickStart()">

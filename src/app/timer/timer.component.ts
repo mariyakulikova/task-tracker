@@ -14,7 +14,6 @@ export class TimerComponent implements OnInit {
 
   timerSubscription: Subscription;
   duration: Date;
-  comment: string;
   timerState = 'not started';
   form: FormGroup;
   id: string;
@@ -27,7 +26,7 @@ export class TimerComponent implements OnInit {
   ngOnInit(): void {
     this.form = new FormGroup({
         title: new FormControl('', Validators.required),
-        comment: new FormControl('')
+        note: new FormControl('')
     });
     this.duration = new Date(2020, 0, 0, 0, 0, 0);
   }
@@ -40,7 +39,7 @@ export class TimerComponent implements OnInit {
     this.timerState = 'running';
     this.startTimer();
     const log: LogTime = {
-      name: this.form.value.title, start: new Date(), comment: this.form.value.comment
+      name: this.form.value.title, start: new Date(), comment: this.form.value.note
     }
     console.log(log);
     this.id = this.firestore.addNewLog(log, new Date());
