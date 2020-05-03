@@ -18,17 +18,20 @@ export class WeekPreviewComponent implements OnInit {
   constructor(
     private firestore: FirestoreService,
     private auth: AuthService,
-    private timer: TimerService) {
-  }
+    private timer: TimerService,
+    ) {}
 
   ngOnInit(): void {
     this.date = new Date();
+    console.log('ngOnInit: ', this.date);
     this.setTasks();
     console.log('local ', this.tasks);
   }
 
   onLeftArrow() {
+    console.log('onLeftArrow step 1: ', this.date);
     this.date = new Date(this.date.setDate(this.date.getDate() - 1));
+    console.log('onLeftArrow step 2: ', this.date);
     this.tasks.splice(0, this.tasks.length);
     this.setTasks();
   }
@@ -40,7 +43,8 @@ export class WeekPreviewComponent implements OnInit {
   }
 
   private setTasks() {
-    this.firestore.getTasks(this.auth.currentUser.uid, this.date)
+    const d: Date = new Date(this.date.setHours(0, 0, 0));
+    this.firestore.getTasks(d)
       .subscribe(value => {
         value.forEach(v => {
           v.duration = this.timer.countDuration(

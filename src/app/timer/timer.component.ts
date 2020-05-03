@@ -42,7 +42,7 @@ export class TimerComponent implements OnInit {
       name: this.form.value.title, start: new Date(), comment: this.form.value.note
     }
     console.log(log);
-    this.id = this.firestore.addNewLog(log, new Date());
+    this.id = this.firestore.addNewLog(log);
   }
 
   onClickStop() {

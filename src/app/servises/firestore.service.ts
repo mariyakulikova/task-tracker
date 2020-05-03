@@ -12,7 +12,7 @@ import {Observable} from 'rxjs';
 export class FirestoreService {
 
   constructor(
-    private database: AngularFirestore,
+    private firestore: AngularFirestore,
     private auth: AuthService) {
   }
 
@@ -30,49 +30,49 @@ export class FirestoreService {
     return logObj;
   }
 
-  private getDoc(id: string, date: Date): AngularFirestoreDocument<any> {
-    return this.database
+  private getDoc(id: string): AngularFirestoreDocument<any> {
+    return this.firestore
       .collection('users')
       .doc(`${this.auth.currentUser.uid}`)
-      .collection('year-month')
-      .doc(`${date.getFullYear()}-${date.getMonth() + 1}`)
-      .collection('days')
-      .doc(`${date.getDate()}`)
       .collection('tasks')
       .doc(id);
   }
 
-  private getCollection(id: string, date: Date): AngularFirestoreCollection<any> {
-    return this.database
+  private getCollection(date: Date): AngularFirestoreCollection<any> {
+    return this.firestore
       .collection('users')
       .doc(`${this.auth.currentUser.uid}`)
-      .collection('year-month')
-      .doc(`${date.getFullYear()}-${date.getMonth() + 1}`)
-      .collection('days')
-      .doc(`${date.getDate()}`)
-      .collection('tasks');
+      .collection('tasks', ref => ref.where('start', '>=', date).where('start', '<', new Date(date.setDate(date.getDate() + 1))));
   }
 
-  addNewLog(log: LogTime, date: Date): string {
-    const id = this.database.createId();
-    this.getDoc(id, date).set(this.converter(log));
+  addNewLog(log: LogTime): string {
+    const id = this.firestore.createId();
+    this.getDoc(id).set(this.converter(log));
     return id;
   }
 
-  addStopField(id: string, date: Date) {
-    this.getDoc(id, date).update({
+  updateFields(id: string, data: any) {
+    this.getDoc(id).update(data).then(r => {
+      console.log(r);
+    }).catch(er => false);
+  }
+
+  addStopField(id: string, date: Date): Promise<boolean> {
+    return this.getDoc(id).update({
       stop: date,
-    });
+    })
+      .then(result => true)
+      .catch(err => false);
   }
 
   updatePauseField(id: string, date: Date) {
-    this.getDoc(id, date).update({
+    this.getDoc(id).update({
       pause: firebase.firestore.FieldValue.arrayUnion(date),
     });
   }
 
-  getTasks(userId: string, date: Date): Observable<LogTime[]> {
-    return this.getCollection(userId, date).get().pipe(
+  getTasks(date: Date): Observable<LogTime[]> {
+    return this.getCollection(date).get().pipe(
       map(snapshots => {
         return snapshots.docs
           .map(doc => {
@@ -84,9 +84,13 @@ export class FirestoreService {
       }));
   }
 
-  getLog(id: string, date: Date) {
-    this.getDoc(id, date).get().subscribe(data => {
-      console.log(data.data());
-    });
+  getLog(id: string): Observable<LogTime> {
+    return this.getDoc(id).get().pipe(
+      map(snapshot => {
+        const task = snapshot.data();
+        Object.assign(task, {id: snapshot.id});
+        return task as LogTime;
+      })
+    );
   }
 }

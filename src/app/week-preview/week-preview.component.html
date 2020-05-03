@@ -22,7 +22,7 @@
       <span class="task_name">{{task.name}}</span>
       <div class="duration">
         <span>Duration: {{task.duration | date:'HH:mm:ss'}}</span>
-        <div class="edit_button">
+        <div class="edit_button" [routerLink]="['/edit/' + task.id]">
           <span class="material-icons">
             edit
           </span>

@@ -6,6 +6,7 @@ import {TimerComponent} from './timer/timer.component';
 import {EditComponent} from './edit/edit.component';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {AuthGuard} from './servises/auth.guard';
+import {EditResolver} from './edit/edit.resolver.service';
 
 
 const routes: Routes = [
@@ -27,6 +28,12 @@ const routes: Routes = [
     path: 'edit',
     component: EditComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'edit/:id',
+    component: EditComponent,
+    canActivate: [AuthGuard],
+    resolve: {task: EditResolver},
   },
   {
     path: 'error',

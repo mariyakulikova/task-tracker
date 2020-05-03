@@ -21,7 +21,7 @@ export class AuthService {
     return firebase.auth().signInWithPopup(this.provider).then(result => {
       this.user = this.firebaseAuth.auth.currentUser;
       this.authenticated = true;
-      this.router.navigate(['/calendar']);
+      this.router.navigateByUrl('/calendar').then(r => console.log('navigation by url ended'));
     });
   }
 
@@ -41,7 +41,7 @@ export class AuthService {
       .then(value => {
         this.user = this.firebaseAuth.auth.currentUser;
         this.authenticated = true;
-        this.router.navigate(['/calendar']);
+        this.router.navigateByUrl('/calendar');
       });
   }
 
