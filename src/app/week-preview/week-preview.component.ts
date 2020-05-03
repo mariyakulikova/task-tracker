@@ -23,15 +23,11 @@ export class WeekPreviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.date = new Date();
-    console.log('ngOnInit: ', this.date);
     this.setTasks();
-    console.log('local ', this.tasks);
   }
 
   onLeftArrow() {
-    console.log('onLeftArrow step 1: ', this.date);
     this.date = new Date(this.date.setDate(this.date.getDate() - 1));
-    console.log('onLeftArrow step 2: ', this.date);
     this.tasks.splice(0, this.tasks.length);
     this.setTasks();
   }

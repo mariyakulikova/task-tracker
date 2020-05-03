@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable, NgZone} from '@angular/core';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
@@ -15,13 +15,16 @@ export class AuthService {
 
   constructor(
     private firebaseAuth: AngularFireAuth,
-    private router: Router) { }
+    private router: Router,
+    private ngZone: NgZone) { }
 
   singInGoogle(): Promise<any> {
     return firebase.auth().signInWithPopup(this.provider).then(result => {
       this.user = this.firebaseAuth.auth.currentUser;
       this.authenticated = true;
-      this.router.navigateByUrl('/calendar').then(r => console.log('navigation by url ended'));
+      this.ngZone.run(() => {
+        this.router.navigateByUrl('/calendar').then(r => console.log('navigation by url ended'));
+      });
     });
   }
 
