@@ -28,8 +28,12 @@
 
 .input {
   background: #FFFFFF;
-  border: none;
-  border-bottom: 1px solid #B4B7BF;
+  border: 1px solid #B4B7BF;
+  border-radius: 3px;
+  height: 20px;
+  font-family: Arial;
+  color: #3C3D40;
+  outline: none;
   height: 20px;
   outline: none;
 }
