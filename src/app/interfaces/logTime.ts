@@ -5,7 +5,7 @@ export interface LogTime {
   name: string;
   start: Date | firebase.firestore.Timestamp;
   stop?: Date | firebase.firestore.Timestamp;
-  pause?: Date[];
+  pause?: Date[] | firebase.firestore.Timestamp[];
   duration?: Date;
   comment?: string;
 }

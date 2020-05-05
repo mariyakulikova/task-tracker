@@ -5,6 +5,7 @@ import * as firebase from 'firebase/app';
 import {AuthService} from './auth.service';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {UtilityService} from './utility.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class FirestoreService {
 
   constructor(
     private firestore: AngularFirestore,
-    private auth: AuthService) {
+    private auth: AuthService,
+    private utility: UtilityService) {
   }
 
   converter(log: LogTime) {
@@ -42,21 +44,26 @@ export class FirestoreService {
     return this.firestore
       .collection('users')
       .doc(`${this.auth.currentUser.uid}`)
-      .collection('tasks', ref => ref.where('start', '>=', date).where('start', '<', new Date(date.setDate(date.getDate() + 1))));
+      .collection('tasks', ref => ref
+        .where('start', '>=', date)
+        .where('start', '<', new Date(date.setDate(date.getDate() + 1))));
   }
 
+  // TODO process promise
   addNewLog(log: LogTime): string {
     const id = this.firestore.createId();
     this.getDoc(id).set(this.converter(log));
     return id;
   }
 
+  // TODO process promise
   updateFields(id: string, data: any) {
     this.getDoc(id).update(data).then(r => {
       console.log(r);
     }).catch(er => false);
   }
 
+  // TODO process promise
   addStopField(id: string, date: Date): Promise<boolean> {
     return this.getDoc(id).update({
       stop: date,
@@ -65,10 +72,12 @@ export class FirestoreService {
       .catch(err => false);
   }
 
-  updatePauseField(id: string, date: Date) {
-    this.getDoc(id).update({
+  // TODO process promise
+  updatePauseField(id: string, date: Date): Promise<boolean> {
+    return this.getDoc(id).update({
       pause: firebase.firestore.FieldValue.arrayUnion(date),
-    });
+    }).then(r => true)
+      .catch(err => false);
   }
 
   getTasks(date: Date): Observable<LogTime[]> {
@@ -80,7 +89,10 @@ export class FirestoreService {
             Object.assign(task, {id: doc.id});
             return task as LogTime;
           })
-          .filter(task => task.hasOwnProperty('stop'));
+          .filter(task => task.hasOwnProperty('stop'))
+          .map(task => {
+            return this.utility.countDuration(task);
+          });
       }));
   }
 
@@ -92,5 +104,9 @@ export class FirestoreService {
         return task as LogTime;
       })
     );
+  }
+
+  deleteLog(id: string): Promise<void> {
+    return this.getDoc(id).delete();
   }
 }

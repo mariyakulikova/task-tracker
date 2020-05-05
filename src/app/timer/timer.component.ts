@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {TimerService} from '../servises/timer.service';
+import {UtilityService} from '../servises/utility.service';
 import {FirestoreService} from '../servises/firestore.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {LogTime} from '../interfaces/logTime';
@@ -19,7 +19,7 @@ export class TimerComponent implements OnInit {
   id: string;
 
   constructor(
-    private timerService: TimerService,
+    private timerService: UtilityService,
     private firestore: FirestoreService
   ) {}
 
@@ -49,9 +49,12 @@ export class TimerComponent implements OnInit {
     if (this.timerState === 'not started') {
       return;
     }
-    this.timerSubscription.unsubscribe();
-    this.timerState = 'stopped';
     const date = new Date();
+    this.timerSubscription.unsubscribe();
+    if (this.timerState === 'paused') {
+      this.firestore.updatePauseField(this.id, date);
+    }
+    this.timerState = 'stopped';
     this.firestore.addStopField(this.id, date);
     this.form.reset();
     this.duration = new Date(2020, 0, 0, 0, 0, 0);
@@ -82,7 +85,7 @@ export class TimerComponent implements OnInit {
   }
 
   private startTimer() {
-    this.timerSubscription = this.timerService.start().subscribe(() => {
+    this.timerSubscription = this.timerService.startTimer().subscribe(() => {
       this.duration = new Date(this.duration.setSeconds(this.duration.getSeconds() + 1));
     });
   }

@@ -30,24 +30,23 @@ li {
   width: 100px;
   height: 100px;
   padding: 20px;
-  border: 1px solid #D8DCE6;
-  background: #EEF3FE;
+  border: 1px solid #787A80;
+  background: #FFFFFF;
   text-transform: uppercase;
   font-size: larger;
   font-weight: bolder;
   color: #3C3D40;
-  /*cursor: pointer;*/
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 li:first-child {
-  border-radius: 20px 0 0 20px;
+  border-radius: 10px 0 0 10px;
 }
 
 li:last-child {
-  border-radius: 0 20px 20px 0;
+  border-radius: 0 10px 10px 0;
 }
 
 .calendar_nav {
@@ -63,59 +62,159 @@ li:last-child {
 
 /*task history*/
 
-.container_task {
+/*.container_task {*/
 
-  box-sizing: border-box;
-  margin-bottom: 20px;
-  padding: 10px 30px 10px 30px;
-  color: #3C3D40;
-  font-weight: bold;
-  display: flex;
-  flex-direction: column;
+/*  box-sizing: border-box;*/
+/*  margin-bottom: 20px;*/
+/*  padding: 10px 30px 10px 30px;*/
+/*  color: #3C3D40;*/
+/*  font-weight: bold;*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  width: 500px;*/
+/*  background: #EEF3FE;*/
+/*  border-radius: 30px;*/
+/*  border: 1px solid #D8DCE6;*/
+/*  justify-content: space-between;*/
+/*  align-items: center;*/
+/*}*/
+
+/*.task_inner {*/
+/*  width: 100%;*/
+/*  display: flex;*/
+/*  justify-content: space-between;*/
+/*  align-items: center;*/
+/*}*/
+
+/*.duration {*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*}*/
+
+/*.buttons {*/
+
+/*}*/
+/*.button {*/
+/*  padding-left: 10px;*/
+/*}*/
+/*.button span {*/
+/*  border: 1px solid #B4B7BF;*/
+/*  border-radius: 2px;*/
+/*  background: #B4B7BF;*/
+/*}*/
+
+/*.button span:hover {*/
+/*  background: #787A80;*/
+/*  color: #FFFFFF;*/
+/*}*/
+
+/*.add_info {*/
+/*  width: 100%;*/
+/*  box-sizing: border-box;*/
+/*  display: flex;*/
+/*  justify-content: space-between;*/
+/*  color: #3C3D40;*/
+/*  height: 65px;*/
+/*}*/
+
+/*.info {*/
+/*  display: flex;*/
+/*  justify-content: space-between;*/
+/*  font-weight: bold;*/
+/*  padding-bottom: 10px;*/
+/*}*/
+
+/*new task div*/
+.total {
   width: 500px;
-  background: #EEF3FE;
-  border-radius: 30px;
-  border: 1px solid #D8DCE6;
-  justify-content: space-between;
-  align-items: center;
+  height: 30px;
+  padding: 20px;
+  border-top: 1px solid #B4B7BF;
+  border-bottom: 1px solid #B4B7BF;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: x-large;
 }
 
-.task_inner {
+.task {
+  width: 500px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid #787A80;
+  margin-bottom: 10px;
+  color: #444444;
+  font-family: Arial;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
-.duration {
-  display: flex;
-  align-items: center;
+.task_name {
+  font-size: large;
+  padding: 4px;
+  width: 400px;
+  height: 20px;
+  text-align: left;
+  align-items: flex-start;
+  margin-bottom: 10px;
 }
 
-.edit_button {
-  padding-left: 10px;
-}
-.edit_button span {
-  border: 1px solid #B4B7BF;
-  border-radius: 2px;
-  background: #B4B7BF;
+.task_note {
+  width: 400px;
+  height: 20px;
+  padding: 4px;
 }
 
-.edit_button span:hover {
-  background: #787A80;
-  color: #FFFFFF;
-}
-
-.add_info {
-  width: 100%;
-  box-sizing: border-box;
-  color: #3C3D40;
-  height: 65px;
-}
-
-.info {
-  display: flex;
-  justify-content: space-between;
+.task_duration {
+  padding-top: 5px;
   font-weight: bold;
-  padding-bottom: 10px;
 }
+
+.buttons {
+  padding: 5px;
+  height: 60px;
+  align-content: space-between;
+}
+
+.button {
+  border: 1px solid #3C3D40;
+  border-radius: 3px;
+  margin-bottom: 5px;
+}
+
+.button:hover {
+  color: #FFFFFF;
+  background: #3C3D40;
+}
+
+.time {
+  width: 100%;
+}
+
+.hidden_content {
+
+}
+
+.task_time {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #B4B7BF;
+  width: 100%;
+  height: 20px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}
+
+.pause {
+  margin-top: 5px;
+  width: 100%;
+  border-radius: 2px;
+  height: 8px;
+  background: #787A80;
+}
+
+

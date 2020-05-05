@@ -5,7 +5,7 @@
 .container {
   color: #3C3D40;
   box-sizing: border-box;
-  background: #EEF3FE;
+  background: #FFFFFF;
   height: 25rem;
   width: 20rem;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
@@ -72,8 +72,7 @@
 .text {
   width: 30px;
   margin: -32px auto 10px;
-  background: #EEF3FE;
-
+  background: #FFFFFF;
 }
 
 .button:active {

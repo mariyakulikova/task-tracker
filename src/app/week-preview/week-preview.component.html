@@ -9,39 +9,115 @@
       keyboard_arrow_right
       </span>
     </div>
-    <ul >
+    <ul>
       <li *ngFor="let day of arrDays; index as i" [class.active]="i === date.getDay()">
         <span>{{day}}</span>
       </li>
     </ul>
   </div>
 
-  <h2 *ngIf="tasks.length === 0">There are no logged tasks</h2>
-  <div class="container_task" *ngFor="let task of tasks">
-    <div class="task_inner">
-      <span class="task_name">{{task.name}}</span>
-      <div class="duration">
-        <span>Duration: {{task.duration | date:'HH:mm:ss'}}</span>
-        <div class="edit_button" [routerLink]="['/edit/' + task.id]">
-          <span class="material-icons">
-            edit
-          </span>
+  <div class="total">Daily total: {{totalHours | date:'HH:mm'}}</div>
+  <div class="container_task task" *ngFor="let task of tasks">
+
+    <div class="content">
+      <div class="text">
+        <div class="task_name">{{task.name}}</div>
+        <div class="task_note">{{task.comment}}</div>
+      </div>
+      <div class="task_duration">{{task.duration | date:'HH:mm'}}</div>
+      <div class="buttons">
+        <div class="button" [routerLink]="['/edit/' + task.id]">
+                <span class="material-icons">
+                  edit
+                </span>
+        </div>
+        <div class="button" (click)="onDelete(task.id)" >
+                <span class="material-icons">
+                  delete_forever
+                </span>
         </div>
       </div>
+
     </div>
-    <div class="add_info">
-      <div class="info">
-        <span>Started</span>
-        <span>{{task.start.toDate() | date:'HH:mm:ss'}}</span>
-      </div>
-      <div class="info">
-        <span>Ended</span>
-        <span>{{task.stop.toDate() | date:'HH:mm:ss'}}</span>
+    <div class="hidden_content">
+      <div class="time">
+        <div class="task_time">
+          <div>{{task.start.toDate() | date:'HH:mm'}}</div>
+          <div>{{task.stop.toDate() | date:'HH:mm'}}</div>
+        </div>
+        <div class="pause"></div>
       </div>
     </div>
+
+
+    <!--    <div class="task_inner">-->
+    <!--      <span class="task_name">title: {{task.name}}</span>-->
+    <!--      <div class="duration">-->
+    <!--        <span>{{task.duration | date:'HH:mm'}}</span>-->
+    <!--        <div class="buttons">-->
+    <!--          <div class="button" [routerLink]="['/edit/' + task.id]">-->
+    <!--          <span class="material-icons">-->
+    <!--            edit-->
+    <!--          </span>-->
+    <!--          </div>-->
+    <!--          <div class="button">-->
+    <!--          <span class="material-icons">-->
+    <!--            delete_forever-->
+    <!--          </span>-->
+    <!--          </div>-->
+    <!--        </div>-->
+
+    <!--    </div>-->
+    <!--    <div class="add_info">-->
+    <!--      <div class="info">-->
+    <!--        <span>{{task.start.toDate() | date:'HH:mm'}}</span>-->
+    <!--        <span>{{task.stop.toDate() | date:'HH:mm'}}</span>-->
+    <!--      </div>-->
+    <!--      <div class="info">-->
+
+    <!--      </div>-->
+    <!--    </div>-->
+    <!--  </div>-->
+
+
   </div>
 
-  </div>
+
+  <!--  <div class="task" *ngFor="let task of tasks">-->
+  <!--    <div class="content">-->
+  <!--      <div class="text">-->
+  <!--        <div class="task_name">title: {{task.name}}</div>-->
+  <!--        <div class="task_note">note: {{task.comment}}</div>-->
+  <!--      </div>-->
+  <!--      <div class="task_duration">{{task.duration | date:'HH:mm'}}</div>-->
+  <!--      <div class="buttons">-->
+  <!--        <div class="button" [routerLink]="['/edit/' + task.id]">-->
+  <!--            <span class="material-icons">-->
+  <!--              edit-->
+  <!--            </span>-->
+  <!--        </div>-->
+  <!--        <div class="button">-->
+  <!--            <span class="material-icons">-->
+  <!--              delete_forever-->
+  <!--            </span>-->
+  <!--        </div>-->
+  <!--      </div>-->
+
+  <!--    </div>-->
+  <!--    <div class="hidden_content">-->
+  <!--      <div class="time">-->
+  <!--        <div class="task_time">-->
+  <!--          <div>{{task.start | date:'HH:mm'}}</div>-->
+  <!--          <div>{{task.stop | date:'HH:mm'}}</div>-->
+  <!--        </div>-->
+  <!--        <div class="pause"></div>-->
+  <!--      </div>-->
+  <!--      <span>gbjeljgiorejgrejpger</span>-->
+
+  <!--    </div>-->
+
+  <!--  </div>-->
 
 
+</div>>
 
