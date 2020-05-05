@@ -14,9 +14,7 @@ export class WeekPreviewComponent implements OnInit {
   tasks: LogTime[] = [];
   totalHours: Date;
 
-  constructor(
-    private firestore: FirestoreService,
-    ) {}
+  constructor(private firestore: FirestoreService) {}
 
   ngOnInit(): void {
     this.date = new Date();

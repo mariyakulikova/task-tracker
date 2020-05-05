@@ -8,7 +8,8 @@
   background: #FFFFFF;
   height: 25rem;
   width: 20rem;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  border: 1px solid #787A80;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
