@@ -4,6 +4,7 @@ import {FirestoreService} from '../servises/firestore.service';
 import {LogTime} from '../interfaces/logTime';
 import {ActivatedRoute} from '@angular/router';
 import * as firebase from 'firebase';
+import {EditValidator} from './edit.validator';
 
 export interface Placeholder {
   date: string;
@@ -18,26 +19,31 @@ export interface Placeholder {
 })
 export class EditComponent implements OnInit {
 
-  form: FormGroup;
-  task: LogTime;
-  placeholder: Placeholder;
-
   constructor(
     private firestore: FirestoreService,
     private activatedRoute: ActivatedRoute,
   ) {
   }
 
+  form: FormGroup;
+  task: LogTime = null;
+  placeholder: Placeholder;
+
+
+
   ngOnInit(): void {
     this.task = this.activatedRoute.snapshot.data.task as LogTime;
-    this.setPlaceholder();
+    this.setupPlaceholder();
     this.form = new FormGroup({
         name: new FormControl(this.task ? this.task.name : null, Validators.required),
         note: new FormControl(this.task ? this.task.comment : null),
-        date: new FormControl(this.placeholder.date, Validators.required),
-        start: new FormControl(this.placeholder.timeStart, Validators.required),
-        stop: new FormControl(this.placeholder.timeStop, Validators.required)
-      }
+        date: new FormControl(this.placeholder.date,
+          [Validators.required, EditValidator.dateValidator]),
+        start: new FormControl(this.placeholder.timeStart,
+          [Validators.required, EditValidator.startValidator(this.task)]),
+        stop: new FormControl(this.placeholder.timeStop,
+          [Validators.required, EditValidator.stopValidator(this.task)])
+      }, [EditValidator.timeValidator]
     );
   }
 
@@ -46,6 +52,7 @@ export class EditComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
+
     const log: LogTime = {
       name: this.form.value.name,
       start: new Date(this.form.value.date.concat('T', this.form.value.start)),
@@ -64,7 +71,7 @@ export class EditComponent implements OnInit {
     this.form.reset();
   }
 
-  private setPlaceholder() {
+  private setupPlaceholder() {
     let start: Date | firebase.firestore.Timestamp = new Date();
     let stop: string | null = null;
     if (!!this.task) {

@@ -21,15 +21,15 @@
     </div>
 
     <div class="container__time">
-      <div class="from_to">
+      <div class="from_to" >
         <small>From</small>
         <input [formControlName]="'start'" type="time"
-               [class.is-invalid]="form.get('start').invalid && form.get('start').touched">
+               [class.is-invalid]="form.invalid && form.get('start').touched">
       </div>
       <div class="from_to">
         <small>To</small>
         <input [formControlName]="'stop'" type="time"
-               [class.is-invalid]="form.get('stop').invalid && form.get('stop').touched">
+               [class.is-invalid]="form.invalid && form.get('stop').touched">
       </div>
     </div>
 
@@ -42,7 +42,9 @@
       <button (click)="onCancel()">Cancel</button>
       <button (click)="onSave()">Save</button>
     </div>
+<!--    <pre>{{form.get('start').errors | json}}</pre>-->
   </form>
+
 </div>
 
 
