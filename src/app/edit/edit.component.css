@@ -3,13 +3,10 @@
   color: #3C3D40;
   box-sizing: border-box;
   background: #FFFFFF;
-  height: 30rem;
-  width: 20rem;
-  border: 1px solid #787A80;
+  height: 35rem;
+  /*width: 20rem;*/
+  border: 2px solid #787A80;
   border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   padding: 40px;
   position: absolute;
@@ -19,26 +16,39 @@
   transform: translate(-50%, -50%)
 }
 
+.form {
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 button {
   box-sizing: border-box;
-  color: #FFF;
-  width: 40%;
+  color: #3C3D40;
+  border: 2px solid #787A80;
+  width: 45%;
   padding: 10px;
   border-radius: 20px;
   font-size: 15px;
   margin: 10px 0;
-  border: none;
   outline: none;
   cursor: pointer;
   text-transform: uppercase;
-  text-align: center;
-  background: #D8DCE6;
+  display: inline-flex;
+  justify-content: center;
+  background: #FFFFFF;
+  font-weight: bold;
+}
+
+.material-icons {
+  padding-left: 5px;
 }
 
 button:hover {
-  background-color: #B4B7BF;
+  background-color: #787A80;
   cursor: pointer;
-  color: #3C3D40;
+  color: #FFFFFF;
 }
 
 input {
@@ -48,12 +58,13 @@ input {
   border-radius: 3px;
   height: 20px;
   font-family: Arial;
-  color: #3C3D40;
+  color: #787A80;
   outline: none;
   font-size: large;
+  margin-bottom: 10px;
 }
 
-small {
+.small {
   color: #B4B7BF;
   font-weight: bold;
 }
@@ -69,14 +80,6 @@ textarea {
 
 .container__inner {
   width: 100%;
-
-}
-.duration {
-  background: #FFFFFF;
-  border: 1px solid #B4B7BF;
-  height: 20px;
-  width: 100%;
-  border-radius: 5px;
 }
 
 .container__button {
@@ -88,11 +91,13 @@ textarea {
 span {
   font-weight: bold;
   font-size: large;
-  padding-bottom: 10px;
 }
 
 .span {
+  color: #787A80;
   border-bottom: 1px solid #B4B7BF;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .container__time {

@@ -1,50 +1,50 @@
 <div class="container">
-  <form [formGroup]="form" >
+  <form class="form" [formGroup]="form">
     <div class="container__inner span">
-      <span>Log Time</span>
+      <span>{{title}}</span>
     </div>
     <div class="container__inner">
-      <small>Task</small>
+      <small class="small">Task</small>
       <input [formControlName]="'name'" type="text" class="task_name"
              [class.is-invalid]="form.get('name').invalid && form.get('name').touched">
     </div>
-
     <div class="container__inner">
-      <small>Notes</small>
-      <textarea [formControlName]="'note'" class="notes" name="" id="" cols="30" rows="5" placeholder="Notes (optional)"></textarea>
+      <small class="small">Notes</small>
+      <textarea [formControlName]="'note'" class="notes" name="" id="" cols="30" rows="5"
+                placeholder="Notes (optional)"></textarea>
     </div>
-
     <div class="container__inner">
-      <small>Date</small>
+      <small class="small">Date</small>
       <input [formControlName]="'date'" type="date"
              [class.is-invalid]="form.get('date').invalid && form.get('date').touched">
     </div>
-
     <div class="container__time">
-      <div class="from_to" >
-        <small>From</small>
+      <div class="from_to">
+        <small class="small">From</small>
         <input [formControlName]="'start'" type="time"
                [class.is-invalid]="form.invalid && form.get('start').touched">
       </div>
       <div class="from_to">
-        <small>To</small>
+        <small class="small">To</small>
         <input [formControlName]="'stop'" type="time"
                [class.is-invalid]="form.invalid && form.get('stop').touched">
       </div>
     </div>
-
-<!--    <div class="container__inner">-->
-<!--      <small>Duration</small>-->
-<!--      <div class="duration">{{showDuration()}}</div>-->
-<!--    </div>-->
-
     <div class="container__button">
-      <button (click)="onCancel()">Cancel</button>
-      <button (click)="onSave()">Save</button>
+      <button (click)="onCancel()">
+        Cancel
+        <span class="material-icons">
+        cancel
+      </span>
+      </button>
+      <button (click)="onSave()">Save
+        <span class="material-icons">
+        save_alt
+      </span>
+      </button>
     </div>
-<!--    <pre>{{form.get('start').errors | json}}</pre>-->
   </form>
-
+  <div class="message"></div>
 </div>
 
 

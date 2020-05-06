@@ -4,8 +4,10 @@
     log in with Google</div>
   <hr>
   <span class="text">OR</span>
-  <input class="input" type="email" placeholder="email" [(ngModel)]="email">
-  <input class="input" type="password" placeholder="password" [(ngModel)]="password">
+  <small>Login</small>
+  <input class="input" type="email" [(ngModel)]="email">
+  <small>Password</small>
+  <input class="input" type="password" [(ngModel)]="password">
   <div class="container-button">
     <div class="button" (click)="login()">Log in</div>
     <div class="button" (click)="signUp()">Sing up</div>

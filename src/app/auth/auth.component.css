@@ -6,9 +6,9 @@
   color: #3C3D40;
   box-sizing: border-box;
   background: #FFFFFF;
-  height: 25rem;
+  height: 27rem;
   width: 20rem;
-  border: 1px solid #787A80;
+  border: 2px solid #787A80;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -46,34 +46,37 @@
 
 .button {
   box-sizing: border-box;
-  color: #FFF;
+  color: #787A80;
   width: 100%;
   padding: 10px;
   border-radius: 20px;
   font-size: 15px;
   margin: 10px 0;
-  border: none;
+  border: 1px solid #787A80;
   outline: none;
   cursor: pointer;
   text-transform: uppercase;
   text-align: center;
-  background: #D8DCE6;
+  background: #FFFFFF;
+  font-weight: bold;
 }
 
 .button-google {
   width: 100%;
   display: inline-block;
   background: white;
-  color: #444;
-  border: thin solid #888;
+  color: #787A80;
+  border: 1px solid #787A80;
+  font-weight: bold;
   white-space: nowrap;
-
 }
 
 .text {
+  font-weight: bold;
   width: 30px;
-  margin: -32px auto 10px;
+  margin: -26px auto 10px;
   background: #FFFFFF;
+  color: #787A80;
 }
 
 .button:active {
@@ -82,19 +85,25 @@
 }
 
 .button:hover {
-  background-color: #B4B7BF;
+  background-color: #787A80;
   cursor: pointer;
-  color: #3C3D40;
+  color: #FFFFFF;
 }
 
 hr {
   margin-top: 20px;
   width: 80%;
+  background: #B4B7BF;
 }
 
 .firebaseui-error {
   color: red;
   height: 30px;
+}
+
+small {
+  color: #B4B7BF;
+  font-weight: bold;
 }
 
 

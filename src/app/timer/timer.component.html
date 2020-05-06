@@ -1,8 +1,11 @@
 <div class="container">
+  <div class="container__inner span">
+    <span>Timer</span>
+  </div>
   <div class="container__timer">
     <div class="tick_tack">{{duration | date:'HH:mm:ss'}}</div>
   </div>
-  <form [formGroup]="form" >
+  <form [formGroup]="form">
     <div>
       <small>Task</small>
       <input [formControlName]="'title'" type="text" class="task_name"
@@ -14,17 +17,27 @@
                 class="notes" name="" id="" cols="30" rows="8"></textarea>
     </div>
   </form>
+  <div class="buttons">
     <button *ngIf="showStartButton()" (click)="onClickStart()">
-      start
+      start <span class="material-icons">
+      play_circle_outline
+      </span>
     </button>
     <button *ngIf="showPauseButton()" (click)="onClickPause()">
-      pause
+      pause <span class="material-icons">
+      pause_circle_outline
+      </span>
     </button>
     <button *ngIf="showResumeButton()" (click)="onClickResume()">
-      resume
+      resume <span class="material-icons">
+      play_circle_outline
+      </span>
     </button>
     <button (click)="onClickStop()">
       stop
+      <span class="material-icons">
+      stop
+    </span>
     </button>
-
+  </div>
 </div>
