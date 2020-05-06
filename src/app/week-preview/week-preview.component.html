@@ -1,6 +1,6 @@
 <div class="container">
   <div class="calendar">
-    <div class="calendar_nav">
+    <div class="calendar_nav" #leftArrow>
       <span class="material-icons" (click)="onLeftArrow()">
       keyboard_arrow_left
       </span>
@@ -15,109 +15,40 @@
       </li>
     </ul>
   </div>
-
-  <div class="total">Daily total: {{totalHours | date:'HH:mm'}}</div>
-  <div class="container_task task" *ngFor="let task of tasks">
-
-    <div class="content">
-      <div class="text">
-        <div class="task_name">{{task.name}}</div>
-        <div class="task_note">{{task.comment}}</div>
-      </div>
-      <div class="task_duration">{{task.duration | date:'HH:mm'}}</div>
-      <div class="buttons">
-        <div class="button" [routerLink]="['/edit/' + task.id]">
+  <div *ngIf="!loading; else loader">
+    <div class="total">Daily total: {{totalHours | date:'HH:mm'}}</div>
+    <div class="container_task task" *ngFor="let task of tasks">
+      <div class="content">
+        <div class="text">
+          <div class="task_name">{{task.name}}</div>
+          <div class="task_note">{{task.comment}}</div>
+        </div>
+        <div class="task_duration">{{task.duration | date:'HH:mm'}}</div>
+        <div class="buttons">
+          <div class="button" [routerLink]="['/edit/' + task.id]">
                 <span class="material-icons">
                   edit
                 </span>
-        </div>
-        <div class="button" (click)="onDelete(task.id)" >
+          </div>
+          <div class="button" (click)="onDelete(task.id)">
                 <span class="material-icons">
                   delete_forever
                 </span>
+          </div>
         </div>
       </div>
-
-    </div>
-    <div class="hidden_content">
-      <div class="time">
-        <div class="task_time">
-          <div>{{task.start.toDate() | date:'HH:mm'}}</div>
-          <div>{{task.stop.toDate() | date:'HH:mm'}}</div>
+      <div class="hidden_content">
+        <div class="time">
+          <div class="task_time">
+            <div>{{task.start.toDate() | date:'HH:mm'}}</div>
+            <div>{{task.stop.toDate() | date:'HH:mm'}}</div>
+          </div>
+          <div class="pause"></div>
         </div>
-        <div class="pause"></div>
       </div>
     </div>
-
-
-    <!--    <div class="task_inner">-->
-    <!--      <span class="task_name">title: {{task.name}}</span>-->
-    <!--      <div class="duration">-->
-    <!--        <span>{{task.duration | date:'HH:mm'}}</span>-->
-    <!--        <div class="buttons">-->
-    <!--          <div class="button" [routerLink]="['/edit/' + task.id]">-->
-    <!--          <span class="material-icons">-->
-    <!--            edit-->
-    <!--          </span>-->
-    <!--          </div>-->
-    <!--          <div class="button">-->
-    <!--          <span class="material-icons">-->
-    <!--            delete_forever-->
-    <!--          </span>-->
-    <!--          </div>-->
-    <!--        </div>-->
-
-    <!--    </div>-->
-    <!--    <div class="add_info">-->
-    <!--      <div class="info">-->
-    <!--        <span>{{task.start.toDate() | date:'HH:mm'}}</span>-->
-    <!--        <span>{{task.stop.toDate() | date:'HH:mm'}}</span>-->
-    <!--      </div>-->
-    <!--      <div class="info">-->
-
-    <!--      </div>-->
-    <!--    </div>-->
-    <!--  </div>-->
-
-
   </div>
-
-
-  <!--  <div class="task" *ngFor="let task of tasks">-->
-  <!--    <div class="content">-->
-  <!--      <div class="text">-->
-  <!--        <div class="task_name">title: {{task.name}}</div>-->
-  <!--        <div class="task_note">note: {{task.comment}}</div>-->
-  <!--      </div>-->
-  <!--      <div class="task_duration">{{task.duration | date:'HH:mm'}}</div>-->
-  <!--      <div class="buttons">-->
-  <!--        <div class="button" [routerLink]="['/edit/' + task.id]">-->
-  <!--            <span class="material-icons">-->
-  <!--              edit-->
-  <!--            </span>-->
-  <!--        </div>-->
-  <!--        <div class="button">-->
-  <!--            <span class="material-icons">-->
-  <!--              delete_forever-->
-  <!--            </span>-->
-  <!--        </div>-->
-  <!--      </div>-->
-
-  <!--    </div>-->
-  <!--    <div class="hidden_content">-->
-  <!--      <div class="time">-->
-  <!--        <div class="task_time">-->
-  <!--          <div>{{task.start | date:'HH:mm'}}</div>-->
-  <!--          <div>{{task.stop | date:'HH:mm'}}</div>-->
-  <!--        </div>-->
-  <!--        <div class="pause"></div>-->
-  <!--      </div>-->
-  <!--      <span>gbjeljgiorejgrejpger</span>-->
-
-  <!--    </div>-->
-
-  <!--  </div>-->
-
-
+  <ng-template #loader>
+    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+  </ng-template>
 </div>>
-

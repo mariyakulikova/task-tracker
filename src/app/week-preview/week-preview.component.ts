@@ -1,6 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FirestoreService} from '../servises/firestore.service';
 import {LogTime} from '../interfaces/logTime';
+import {Subscription} from 'rxjs/internal/Subscription';
+import {Subject} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
 
 @Component({
   selector: 'app-week-preview',
@@ -9,46 +12,63 @@ import {LogTime} from '../interfaces/logTime';
 })
 export class WeekPreviewComponent implements OnInit {
 
+  @ViewChild('leftArrow', {static: false}) leftArrow: ElementRef;
+
   date: Date = new Date();
   arrDays: string[] = ['sun', 'mon', 'tue', 'wen', 'thu', 'fri', 'sat'];
   tasks: LogTime[] = [];
   totalHours: Date;
+  dateSubject: Subject<Date> = new Subject();
+
+  lastRunning: Subscription = null;
+
+  loading = false;
 
   constructor(private firestore: FirestoreService) {}
 
   ngOnInit(): void {
     this.date = new Date();
-    this.setTasks();
-  }
-
-  onLeftArrow() {
-    this.date = new Date(this.date.setDate(this.date.getDate() - 1));
-    this.tasks.splice(0, this.tasks.length);
-    this.setTasks();
-  }
-
-  onRightArrow() {
-    this.date = new Date(this.date.setDate(this.date.getDate() + 1));
-    this.tasks.splice(0, this.tasks.length);
-    this.setTasks();
-  }
-
-  onDelete(id: string) {
-    this.firestore.deleteLog(id)
-      .then(r => {
-        this.tasks.splice(0, this.tasks.length);
-        this.setTasks();
+    this.loadTasks();
+    this.dateSubject
+      .pipe(debounceTime(300))
+      .subscribe(val => {
+        this.loadTasks();
       });
   }
 
-  private setTasks() {
+  onLeftArrow() {
+    this.loading = true;
+    this.date = new Date(this.date.setDate(this.date.getDate() - 1));
+    this.dateSubject.next(this.date);
+  }
+
+  onRightArrow() {
+    this.loading = true;
+    this.date = new Date(this.date.setDate(this.date.getDate() + 1));
+    this.dateSubject.next(this.date);
+  }
+
+  onDelete(id: string) {
+    this.tasks = this.tasks.filter(t => t.id !== id);
+    this.firestore.deleteLog(id);
+  }
+
+  private loadTasks() {
+    this.loading = true;
+    if (this.lastRunning) {
+      this.lastRunning.unsubscribe();
+    }
+
     const d: Date = new Date(this.date.setHours(0, 0, 0));
-    this.firestore.getTasks(d)
+
+    this.lastRunning = this.firestore.getTasks(d)
       .subscribe(value => {
+        this.tasks.splice(0, this.tasks.length);
         value.forEach(v => {
           this.tasks.push(v);
         });
         this.countTotalHours();
+        this.loading = false;
       });
   }
 
