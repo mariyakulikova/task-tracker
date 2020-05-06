@@ -1,24 +1,31 @@
-<nav class="navbar" >
-  <div *ngIf="showLogOut()">
-    <a routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="navbar__link" [routerLink]="['/calendar']">
+<nav class="navbar" *ngIf="showLogOut()">
+  <div>
+    <a routerLinkActive="active"
+       [routerLinkActiveOptions]="{exact: true}" class="navbar__link"
+       [routerLink]="['/calendar']">
     <span class="material-icons">
       event
     </span>
       Calendar
     </a>
-    <a routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="navbar__link" [routerLink]="['/timer']">
+    <a routerLinkActive="active"
+       [routerLinkActiveOptions]="{exact: true}" class="navbar__link"
+       [routerLink]="['/timer']">
     <span class="material-icons">
       timer
     </span>
       Timer
     </a>
-    <a routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="navbar__link" [routerLink]="['/edit']">
+    <a routerLinkActive="active"
+       [routerLinkActiveOptions]="{exact: true}" class="navbar__link"
+       [routerLink]="['/edit']">
     <span class="material-icons">
       alarm_add
     </span>
       Log time
     </a>
-    <a class="navbar__link" [routerLink]="'/'" (click)="onLogOut()" >
+    <a class="navbar__link"
+       [routerLink]="'/'" (click)="onLogOut()">
     <span class="material-icons">
       exit_to_app
     </span>
