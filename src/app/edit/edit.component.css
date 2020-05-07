@@ -58,7 +58,7 @@ input {
   border-radius: 3px;
   height: 20px;
   font-family: Arial;
-  color: #787A80;
+  color: #3C3D40;
   outline: none;
   font-size: large;
   margin-bottom: 10px;
@@ -114,4 +114,11 @@ span {
 
 .is-invalid {
   border: 1px solid red;
+}
+
+.message {
+  color: #B4B7BF;
+  font-weight: bold;
+  font-size: small;
+  margin-top: 20px;
 }

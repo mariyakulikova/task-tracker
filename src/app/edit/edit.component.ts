@@ -5,6 +5,7 @@ import {LogTime} from '../interfaces/logTime';
 import {ActivatedRoute} from '@angular/router';
 import * as firebase from 'firebase';
 import {EditValidator} from './edit.validator';
+import {Subject} from 'rxjs';
 
 export interface Placeholder {
   date: string;
@@ -18,21 +19,25 @@ export interface Placeholder {
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
+  form: FormGroup;
+  task: LogTime = null;
+  placeholder: Placeholder;
+  title = 'Add log time';
+  timeValidatorMessage = 'Start time cannot be latter then stop';
+  private taskSubject: Subject<LogTime> = new Subject();
 
   constructor(
     private firestore: FirestoreService,
     private activatedRoute: ActivatedRoute,
-  ) {
-  }
-
-  form: FormGroup;
-  task: LogTime = null;
-  placeholder: Placeholder;
-
-
+  ) {}
 
   ngOnInit(): void {
-    this.task = this.activatedRoute.snapshot.data.task as LogTime;
+    if (this.activatedRoute.snapshot.data.task !== undefined) {
+      console.log('ngOnInit activatedRoute.snapshot.data: ', this.activatedRoute.snapshot.data.task);
+      this.task = this.activatedRoute.snapshot.data.task as LogTime;
+      this.title = 'Edit log time';
+    }
+    console.log('ngOnInit task: ', this.task);
     this.setupPlaceholder();
     this.form = new FormGroup({
         name: new FormControl(this.task ? this.task.name : null, Validators.required),
@@ -50,6 +55,7 @@ export class EditComponent implements OnInit {
   onSave() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      console.log(this.form.get('start').errors, this.form.get('stop').errors);
       return;
     }
 
@@ -64,7 +70,8 @@ export class EditComponent implements OnInit {
     } else {
       this.firestore.addNewLog(log);
     }
-    this.form.reset();
+
+    // this.form.reset();
   }
 
   onCancel() {
@@ -84,5 +91,19 @@ export class EditComponent implements OnInit {
       timeStart: start.toLocaleTimeString().slice(0, 5),
       timeStop: stop
     };
+  }
+
+  showStartValidatorMessage() {
+    return `Start time cannot be latter then ${(this.task.pause[0] as firebase.firestore.Timestamp).toDate().toLocaleTimeString().slice(0, 5)}`;
+  }
+
+  showStopValidatorMessage() {
+    const p = (this.task.pause[this.task.pause.length - 1] as firebase.firestore.Timestamp).toDate();
+    const stop = (this.task.stop as firebase.firestore.Timestamp).toDate();
+    if (p === stop) {
+      return `Stop time cannot be earlier then ${(this.task.pause[this.task.pause.length - 2] as firebase.firestore.Timestamp).toDate().toLocaleTimeString().slice(0, 5)}`;
+    } else {
+      return `Stop time cannot be earlier then ${p.toLocaleTimeString().slice(0, 5)}`;
+    }
   }
 }

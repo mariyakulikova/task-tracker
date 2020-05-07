@@ -44,7 +44,11 @@
       </button>
     </div>
   </form>
-  <div class="message"></div>
+  <div class="message">
+    <div *ngIf="form.errors">{{timeValidatorMessage}}</div>
+    <div *ngIf="form.get('start').errors">{{showStartValidatorMessage()}}</div>
+    <div *ngIf="form.get('stop').errors">{{showStopValidatorMessage()}}</div>
+  </div>
 </div>
 
 
