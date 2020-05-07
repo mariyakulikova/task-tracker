@@ -50,35 +50,25 @@ export class FirestoreService {
         .orderBy('start'));
   }
 
-  // TODO process promise
-  addNewLog(log: LogTime): string {
+  addNewLog(log: LogTime): Promise<string> {
     const id = this.firestore.createId();
-    this.getDoc(id).set(this.converter(log));
-    return id;
+    return this.getDoc(id).set(this.converter(log)).then(r => id);
   }
 
-  // TODO process promise
-  updateFields(id: string, data: any) {
-    this.getDoc(id).update(data).then(r => {
-      console.log(r);
-    }).catch(er => false);
+  updateFields(id: string, data: any): Promise<void> {
+    return this.getDoc(id).update(data);
   }
 
-  // TODO process promise
-  addStopField(id: string, date: Date): Promise<boolean> {
+  addStopField(id: string, date: Date): Promise<void> {
     return this.getDoc(id).update({
       stop: date,
-    })
-      .then(result => true)
-      .catch(err => false);
+    });
   }
 
-  // TODO process promise
-  updatePauseField(id: string, date: Date): Promise<boolean> {
+  updatePauseField(id: string, date: Date): Promise<void> {
     return this.getDoc(id).update({
       pause: firebase.firestore.FieldValue.arrayUnion(date),
-    }).then(r => true)
-      .catch(err => false);
+    });
   }
 
   getTasks(date: Date): Observable<LogTime[]> {
