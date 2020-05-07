@@ -15,23 +15,6 @@ export class UtilityService {
     return this.timer;
   }
 
-  // countDuration(
-  //   start: firebase.firestore.Timestamp | Date,
-  //   stop: firebase.firestore.Timestamp | Date
-  // ): Date {
-  //   let dif = 0;
-  //   if (start instanceof firebase.firestore.Timestamp && stop instanceof firebase.firestore.Timestamp) {
-  //     dif = stop.toMillis() - start.toMillis();
-  //   } else if (start instanceof Date && stop instanceof Date) {
-  //     dif = start.getMilliseconds() - stop.getMilliseconds();
-  //   }
-  //   const date = new Date(dif);
-  //   date.setHours(date.getUTCHours());
-  //   date.setMinutes(date.getUTCMinutes());
-  //   date.setSeconds(date.getUTCSeconds());
-  //   return date;
-  // }
-
   countDuration(task: LogTime): LogTime {
     let dif = 0;
     if (task.start instanceof firebase.firestore.Timestamp && task.stop instanceof firebase.firestore.Timestamp) {
