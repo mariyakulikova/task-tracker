@@ -1,6 +1,6 @@
 <div class="container">
   <div class="calendar">
-    <div class="calendar_nav" #leftArrow>
+    <div class="calendar_nav">
       <span class="material-icons" (click)="onLeftArrow()">
       keyboard_arrow_left
       </span>
@@ -17,11 +17,11 @@
   </div>
   <div *ngIf="!loading; else loader">
     <div class="total">Daily total: {{totalHours | date:'HH:mm'}}</div>
-    <div class="container_task task" *ngFor="let task of tasks">
+    <div class="container_task task" *ngFor="let task of tasks; index as j" >
       <div class="content">
-        <div class="text">
+        <div class="text" (click)="onClick(j)">
           <div class="task_name">{{task.name}}</div>
-          <div class="task_note">{{task.comment}}</div>
+          <div class="task_note" [ngClass]="{hidden_task: isVisible(j)}">{{task.comment}}</div>
         </div>
         <div class="task_duration">{{task.duration | date:'HH:mm'}}</div>
         <div class="buttons">
@@ -30,7 +30,7 @@
                   edit
                 </span>
           </div>
-          <div class="button" (click)="onDelete(task.id)">
+          <div class="button" (click)="onDelete(task.id, j)">
                 <span class="material-icons">
                   delete_forever
                 </span>

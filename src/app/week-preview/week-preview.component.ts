@@ -12,13 +12,12 @@ import {debounceTime} from 'rxjs/operators';
 })
 export class WeekPreviewComponent implements OnInit {
 
-  @ViewChild('leftArrow', {static: false}) leftArrow: ElementRef;
-
   date: Date = new Date();
   arrDays: string[] = ['sun', 'mon', 'tue', 'wen', 'thu', 'fri', 'sat'];
   tasks: LogTime[] = [];
   totalHours: Date;
   dateSubject: Subject<Date> = new Subject();
+  private isClickedArr: boolean[] = [];
 
   lastRunning: Subscription = null;
 
@@ -48,9 +47,19 @@ export class WeekPreviewComponent implements OnInit {
     this.dateSubject.next(this.date);
   }
 
-  onDelete(id: string) {
-    this.tasks = this.tasks.filter(t => t.id !== id);
+  onDelete(id: string, index: number) {
+    this.isClickedArr.splice(index, 1);
+    this.tasks.splice(index, 1);
     this.firestore.deleteLog(id);
+    this.countTotalHours();
+  }
+
+  isVisible(index: number): boolean {
+    return this.isClickedArr[index];
+  }
+
+  onClick(index: number) {
+    this.isClickedArr[index] = !this.isClickedArr[index];
   }
 
   private loadTasks() {
@@ -68,6 +77,7 @@ export class WeekPreviewComponent implements OnInit {
           this.tasks.push(v);
         });
         this.countTotalHours();
+        this.setupIsClickedArr();
         this.loading = false;
       });
   }
@@ -88,5 +98,11 @@ export class WeekPreviewComponent implements OnInit {
     this.totalHours = new Date(countHours);
     this.totalHours.setHours(countHours);
     this.totalHours.setMinutes(countMinutes);
+  }
+
+  private setupIsClickedArr() {
+    for (let i = 0; i < this.tasks.length; i++) {
+      this.isClickedArr[i] = true;
+    }
   }
 }
