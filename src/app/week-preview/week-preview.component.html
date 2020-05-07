@@ -4,7 +4,9 @@
       <span class="material-icons" (click)="onLeftArrow()">
       keyboard_arrow_left
       </span>
-      <span>{{date | date}}</span>
+      <form [formGroup]="form">
+        <input [formControlName]="'date1'" class="date" type="date" (change)="onChange()">
+      </form>
       <span class="material-icons" (click)="onRightArrow()">
       keyboard_arrow_right
       </span>
