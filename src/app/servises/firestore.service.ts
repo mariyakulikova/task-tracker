@@ -46,7 +46,8 @@ export class FirestoreService {
       .doc(`${this.auth.currentUser.uid}`)
       .collection('tasks', ref => ref
         .where('start', '>=', date)
-        .where('start', '<', new Date(date.setDate(date.getDate() + 1))));
+        .where('start', '<', new Date(date.setDate(date.getDate() + 1)))
+        .orderBy('start'));
   }
 
   // TODO process promise

@@ -2,10 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {FirestoreService} from '../servises/firestore.service';
 import {LogTime} from '../interfaces/logTime';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import * as firebase from 'firebase';
 import {EditValidator} from './edit.validator';
-import {Subject} from 'rxjs';
 
 export interface Placeholder {
   date: string;
@@ -24,11 +23,12 @@ export class EditComponent implements OnInit {
   placeholder: Placeholder;
   title = 'Add log time';
   timeValidatorMessage = 'Start time cannot be latter then stop';
-  private taskSubject: Subject<LogTime> = new Subject();
+  // private taskSubject: Subject<LogTime> = new Subject();
 
   constructor(
     private firestore: FirestoreService,
     private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -70,8 +70,7 @@ export class EditComponent implements OnInit {
     } else {
       this.firestore.addNewLog(log);
     }
-
-    // this.form.reset();
+    this.router.navigate(['/calendar'], {state: {data: log.start}});
   }
 
   onCancel() {

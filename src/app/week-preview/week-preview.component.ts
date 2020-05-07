@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FirestoreService} from '../servises/firestore.service';
 import {LogTime} from '../interfaces/logTime';
 import {Subscription} from 'rxjs/internal/Subscription';
@@ -12,7 +12,7 @@ import {debounceTime} from 'rxjs/operators';
 })
 export class WeekPreviewComponent implements OnInit {
 
-  date: Date = new Date();
+  date: Date;
   arrDays: string[] = ['sun', 'mon', 'tue', 'wen', 'thu', 'fri', 'sat'];
   tasks: LogTime[] = [];
   totalHours: Date;
@@ -26,7 +26,7 @@ export class WeekPreviewComponent implements OnInit {
   constructor(private firestore: FirestoreService) {}
 
   ngOnInit(): void {
-    this.date = new Date();
+    this.date = history.state.data ? history.state.data : new Date();
     this.loadTasks();
     this.dateSubject
       .pipe(debounceTime(300))
