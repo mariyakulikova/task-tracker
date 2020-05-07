@@ -4,6 +4,7 @@ import {UtilityService} from '../servises/utility.service';
 import {FirestoreService} from '../servises/firestore.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {LogTime} from '../interfaces/logTime';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-timer',
@@ -20,7 +21,8 @@ export class TimerComponent implements OnInit {
 
   constructor(
     private timerService: UtilityService,
-    private firestore: FirestoreService
+    private firestore: FirestoreService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -42,7 +44,7 @@ export class TimerComponent implements OnInit {
       name: this.form.value.title, start: new Date(), comment: this.form.value.note
     }
     console.log(log);
-    this.id = this.firestore.addNewLog(log);
+    this.firestore.addNewLog(log).then(r => this.id = r);
   }
 
   onClickStop() {
@@ -55,9 +57,8 @@ export class TimerComponent implements OnInit {
       this.firestore.updatePauseField(this.id, date);
     }
     this.timerState = 'stopped';
-    this.firestore.addStopField(this.id, date);
-    this.form.reset();
-    this.duration = new Date(2020, 0, 0, 0, 0, 0);
+    this.firestore.addStopField(this.id, date)
+      .then(r => this.router.navigate(['/calendar'], {state: {data: date}}));
   }
 
   onClickPause() {
