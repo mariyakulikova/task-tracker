@@ -21,6 +21,11 @@
   transform: translate(-50%, -50%)
 }
 
+.form {
+  display: contents;
+
+}
+
 .container-button {
   display: flex;
   flex-direction: column;
@@ -32,16 +37,17 @@
   border: 1px solid #B4B7BF;
   border-radius: 3px;
   height: 20px;
-  font-family: Arial;
   color: #3C3D40;
-  outline: none;
-  height: 20px;
   outline: none;
 }
 
 .container-button {
   display: flex;
   justify-content: space-between;
+}
+
+.form_inner {
+  display: contents;
 }
 
 .button {
@@ -96,14 +102,19 @@ hr {
   background: #B4B7BF;
 }
 
-.firebaseui-error {
+.error-message {
   color: red;
+  font-size: small;
   height: 30px;
 }
 
 small {
   color: #B4B7BF;
   font-weight: bold;
+}
+
+.is-invalid {
+  border: 1px solid red;
 }
 
 
