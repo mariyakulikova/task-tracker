@@ -19,7 +19,7 @@ export class WeekPreviewComponent implements OnInit {
   totalHours: Date;
   loading = false;
 
-  private date: Date;
+  date: Date;
   private date$: Subject<Date> = new Subject();
   private phDate$: Subject<Date> = new Subject();
   private isClickedArr: boolean[] = [];

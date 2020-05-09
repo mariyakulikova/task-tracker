@@ -1,13 +1,13 @@
 <div class="container">
   <div class="calendar">
     <div class="calendar_nav">
-      <span class="material-icons" (click)="onLeftArrow()">
+      <span class="material-icons arrow" (click)="onLeftArrow()">
       keyboard_arrow_left
       </span>
       <form [formGroup]="form">
         <input [formControlName]="'date1'" class="date" type="date" (change)="onChange()">
       </form>
-      <span class="material-icons" (click)="onRightArrow()">
+      <span class="material-icons arrow" (click)="onRightArrow()">
       keyboard_arrow_right
       </span>
     </div>
