@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FirestoreService} from '../servises/firestore.service';
 import {LogTime} from '../interfaces/logTime';
 import {Subscription} from 'rxjs/internal/Subscription';
@@ -12,7 +12,7 @@ import * as firebase from 'firebase';
   templateUrl: './week-preview.component.html',
   styleUrls: ['./week-preview.component.css']
 })
-export class WeekPreviewComponent implements OnInit {
+export class WeekPreviewComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
   arrDays: string[] = ['sun', 'mon', 'tue', 'wen', 'thu', 'fri', 'sat'];
@@ -148,5 +148,10 @@ export class WeekPreviewComponent implements OnInit {
       result.push(Math.ceil((x / total) * 100) + '%');
     }
     return result;
+  }
+
+  ngOnDestroy(): void {
+    this.date$.unsubscribe();
+    this.phDate$.unsubscribe();
   }
 }
