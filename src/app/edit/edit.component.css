@@ -4,7 +4,6 @@
   box-sizing: border-box;
   background: #FFFFFF;
   height: 35rem;
-  /*width: 20rem;*/
   border: 2px solid #787A80;
   border-radius: 10px;
   align-items: center;
@@ -113,11 +112,11 @@ span {
 }
 
 .is-invalid {
-  border: 1px solid red;
+  border: 1px solid #F28482;
 }
 
 .message {
-  color: #B4B7BF;
+  color: #F28482;
   font-weight: bold;
   font-size: small;
   margin-top: 20px;

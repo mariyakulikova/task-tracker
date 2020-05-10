@@ -6,7 +6,7 @@
     <div class="container__inner">
       <small class="small">Task</small>
       <input [formControlName]="'name'" type="text" class="task_name"
-             [class.is-invalid]="form.get('name').invalid && form.get('name').touched">
+             [class.is-invalid]="ifControlInvalid('name')">
     </div>
     <div class="container__inner">
       <small class="small">Notes</small>
@@ -16,18 +16,18 @@
     <div class="container__inner">
       <small class="small">Date</small>
       <input [formControlName]="'date'" type="date"
-             [class.is-invalid]="form.get('date').invalid && form.get('date').touched">
+             [class.is-invalid]="ifControlInvalid('date')">
     </div>
     <div class="container__time">
       <div class="from_to">
-        <small class="small">From</small>
+        <small class="small">Start</small>
         <input [formControlName]="'start'" type="time"
-               [class.is-invalid]="form.invalid && form.get('start').touched">
+               [class.is-invalid]="ifControlInvalid('start')  || ifFormInvalid()">
       </div>
       <div class="from_to">
-        <small class="small">To</small>
+        <small class="small">Stop</small>
         <input [formControlName]="'stop'" type="time"
-               [class.is-invalid]="form.invalid && form.get('stop').touched">
+               [class.is-invalid]="ifControlInvalid('stop') || ifFormInvalid()">
       </div>
     </div>
     <div class="container__button">
@@ -44,10 +44,14 @@
       </button>
     </div>
   </form>
-  <div class="message">
-    <div *ngIf="form.errors">{{timeValidatorMessage}}</div>
-    <div *ngIf="form.get('start').errors">{{showStartValidatorMessage()}}</div>
-    <div *ngIf="form.get('stop').errors">{{showStopValidatorMessage()}}</div>
+  <div class="message" >
+    <div *ngIf="ifControlInvalid('name') && hasError('name', 'required')">task name is required</div>
+    <div *ngIf="ifControlInvalid('start') && hasError('start', 'required')">start field is required</div>
+    <div *ngIf="ifControlInvalid('start') && hasError('start', 'startError')">start cannot be latter then {{getPauseForStartError()}}</div>
+    <div *ngIf="ifControlInvalid('stop') && hasError('stop', 'required')">stop field is required</div>
+    <div *ngIf="ifControlInvalid('stop') && hasError('stop', 'stopError')">stop cannot be earlier then {{getPauseForStopError()}}</div>
+    <div *ngIf="ifControlInvalid('date') && hasError('date', 'dateValidator')">date field is required and cannot be bigger then today</div>
+    <div *ngIf="ifFormInvalid()">start cannot be latter then stop</div>
   </div>
 </div>
 

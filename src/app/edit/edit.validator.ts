@@ -4,18 +4,19 @@ import * as firebase from 'firebase';
 
 export class EditValidator {
 
-  static startValidator(task: LogTime | null): ValidatorFn {
+  static startValidator(task: LogTime): ValidatorFn {
     return (currentControl: AbstractControl): ValidationErrors | null => {
-      if (task !== null && task.pause !== undefined) {
-        const p = (task.pause[0] as firebase.firestore.Timestamp).toDate();
-        const value = currentControl.value.split(':');
-        const start = (task.start as firebase.firestore.Timestamp).toDate();
-        start.setHours(value[0], value[1]);
-        if (start > p) {
-          return {
-            'start time bigger then first pause time': true
-          };
-        }
+      const p = (task.pause[0] as firebase.firestore.Timestamp).toDate();
+      const value = currentControl.value.split(':');
+      const start = (task.start as firebase.firestore.Timestamp).toDate();
+      start.setHours(value[0], value[1]);
+      if (start > p) {
+        return {
+          startError: {
+            startValidator: true,
+            pause: p.toLocaleTimeString().slice(0, 5)
+          }
+        };
       }
       return null;
     };
@@ -23,25 +24,29 @@ export class EditValidator {
 
   static stopValidator(task: LogTime | null): ValidatorFn {
     return (currentControl: AbstractControl): ValidationErrors | null => {
-      if (task !== null && task.pause !== undefined) {
-        const p = (task.pause[task.pause.length - 1] as firebase.firestore.Timestamp).toDate();
-        const value = currentControl.value.split(':');
-        const stop = (task.stop as firebase.firestore.Timestamp).toDate();
-        stop.setHours(value[0], value[1]);
-        if (stop === p) {
-          if (stop < (task.pause[task.pause.length - 2] as Date)) {
-            return {
-              'stop smaller then pause': true
-            };
-          }
-        }
-        if (stop < p) {
+      const p = (task.pause[task.pause.length - 1] as firebase.firestore.Timestamp).toDate();
+      const value = currentControl.value.split(':');
+      const stop = (task.stop as firebase.firestore.Timestamp).toDate();
+      stop.setHours(value[0], value[1]);
+      if (stop === p) {
+        if (stop < (task.pause[task.pause.length - 2] as Date)) {
           return {
-            'stop smaller then pause': true
+            stopError: {
+              stopValidator: true,
+              pause: (task.pause[task.pause.length - 2] as Date).toLocaleTimeString().slice(0, 5)
+            }
           };
         }
-        return null;
       }
+      if (stop < p) {
+        return {
+          stopError: {
+            stopValidator: true,
+            pause: p.toLocaleTimeString().slice(0, 5)
+          }
+        };
+      }
+      return null;
     };
   }
 
@@ -54,7 +59,7 @@ export class EditValidator {
       date.setHours(0, 0, 0, 0);
       if (date > now) {
         return {
-          dateValidator: false
+          dateValidator: true
         };
       }
     }
@@ -66,7 +71,7 @@ export class EditValidator {
     const stop = new Date(group.value.date.concat('T', group.value.stop));
     if (start > stop) {
       return {
-        timeValidator: false
+        timeValidator: true
       };
     }
     return null;
