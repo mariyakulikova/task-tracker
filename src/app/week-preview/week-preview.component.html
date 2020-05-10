@@ -45,7 +45,12 @@
             <div>{{task.start.toDate() | date:'HH:mm'}}</div>
             <div>{{task.stop.toDate() | date:'HH:mm'}}</div>
           </div>
-          <div class="pause"></div>
+          <div class="scale_duration">
+            <div class="segment"
+                 *ngFor="let segment of widthMap.get(j); index as y"
+                 [ngStyle]="getStyle(j, y)"
+                 [ngClass]="{segment_odd: y % 2 === 0}"></div>
+          </div>
         </div>
       </div>
     </div>

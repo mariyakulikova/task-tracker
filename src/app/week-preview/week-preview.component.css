@@ -188,12 +188,16 @@ li:last-child {
   justify-content: space-between;
 }
 
-.pause {
+.scale_duration {
+  display: flex;
   margin-top: 5px;
   width: 100%;
-  border-radius: 2px;
   height: 8px;
   background: #787A80;
+}
+
+.segment_odd {
+  background: #75B9BE;
 }
 
 /*loader*/

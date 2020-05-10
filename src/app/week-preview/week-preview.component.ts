@@ -5,6 +5,7 @@ import {Subscription} from 'rxjs/internal/Subscription';
 import {Subject} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {FormControl, FormGroup} from '@angular/forms';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-week-preview',
@@ -16,6 +17,7 @@ export class WeekPreviewComponent implements OnInit {
   form: FormGroup;
   arrDays: string[] = ['sun', 'mon', 'tue', 'wen', 'thu', 'fri', 'sat'];
   tasks: LogTime[] = [];
+  widthMap: Map<number, string[]> = new Map<number, string[]>();
   totalHours: Date;
   loading = false;
 
@@ -25,11 +27,13 @@ export class WeekPreviewComponent implements OnInit {
   private isClickedArr: boolean[] = [];
   private lastRunning: Subscription = null;
 
-  constructor(private firestore: FirestoreService) {}
+  constructor(private firestore: FirestoreService) {
+  }
 
   ngOnInit(): void {
     this.date = history.state.data ? history.state.data : new Date();
     this.loadTasks();
+
     this.form = new FormGroup({
       date1: new FormControl(this.date.toLocaleDateString('fr-CA'))
     });
@@ -56,7 +60,8 @@ export class WeekPreviewComponent implements OnInit {
     this.isClickedArr.splice(index, 1);
     this.tasks.splice(index, 1);
     this.countTotalHours();
-    this.firestore.deleteLog(id).catch(err => {});
+    this.firestore.deleteLog(id).catch(err => {
+    });
   }
 
   onChange() {
@@ -70,6 +75,13 @@ export class WeekPreviewComponent implements OnInit {
 
   onClick(index: number) {
     this.isClickedArr[index] = !this.isClickedArr[index];
+  }
+
+  getStyle(key: number, index: number): {[key: string]: string} {
+    const arr = this.widthMap.get(key);
+    return {
+      width: arr[index],
+    };
   }
 
   private loadTasks() {
@@ -88,6 +100,7 @@ export class WeekPreviewComponent implements OnInit {
         });
         this.countTotalHours();
         this.setupIsClickedArr();
+        this.setupWidthMap();
         this.loading = false;
       });
   }
@@ -111,8 +124,29 @@ export class WeekPreviewComponent implements OnInit {
   }
 
   private setupIsClickedArr() {
-    for (let i = 0; i < this.tasks.length; i++) {
-      this.isClickedArr[i] = true;
+    this.tasks.forEach((task, i) => this.isClickedArr[i] = true);
+  }
+
+  private setupWidthMap() {
+    this.tasks.forEach((task, i) => {
+      const widthArr = this.countWidthArr(task);
+      this.widthMap.set(i, widthArr);
+      }
+    );
+  }
+
+  private countWidthArr(task: LogTime): string[] {
+    const result = [];
+    const total = (task.stop as firebase.firestore.Timestamp).toMillis() - (task.start as firebase.firestore.Timestamp).toMillis();
+    if (!task.pause) {
+      result.push(100 + '%');
+      return result;
     }
+    const arr = ([task.start].concat(task.pause, task.stop)) as firebase.firestore.Timestamp[];
+    for (let i = 1; i < arr.length; i++) {
+      const x = arr[i].toMillis() - arr[i - 1].toMillis();
+      result.push(Math.ceil((x / total) * 100) + '%');
+    }
+    return result;
   }
 }
