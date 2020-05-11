@@ -104,7 +104,7 @@ export class WeekPreviewComponent implements OnInit, OnDestroy {
           if (!v.hasOwnProperty('stop')) {
             v = this.processUnfinishedTask(v);
           }
-          v = this.utility.countDuration(v);
+          v.duration = this.utility.countDurationForTask(v);
           this.tasks.push(v);
         });
         this.countTotalHours();
@@ -130,14 +130,6 @@ export class WeekPreviewComponent implements OnInit, OnDestroy {
       countHours += task.duration.getHours();
       countMinutes += task.duration.getMinutes();
     }
-
-    // for (let i = 0; i < this.tasks.length; i++) {
-    //   if (!this.tasks[i].duration) {
-    //     continue;
-    //   }
-    //   countHours += this.tasks[i].duration.getHours();
-    //   countMinutes += this.tasks[i].duration.getMinutes();
-    // }
 
     this.totalHours = new Date(countHours);
     this.totalHours.setHours(countHours);

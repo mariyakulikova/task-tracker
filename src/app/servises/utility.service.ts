@@ -15,30 +15,42 @@ export class UtilityService {
     return this.timer;
   }
 
-  countDuration(task: LogTime): LogTime {
-    let dif: number;
-    if (!task.stop) {
-      task.duration = null;
-      return task;
-    }
+  countDuration(task: LogTime): Date {
     const start = task.start as firebase.firestore.Timestamp;
-    const stop = task.stop as firebase.firestore.Timestamp;
-    dif = stop.toMillis() - start.toMillis();
+    const stop = !!task.stop ? task.stop as firebase.firestore.Timestamp : firebase.firestore.Timestamp.now();
+    const diff = stop.toMillis() - start.toMillis();
 
-    let difPause = 0;
+    let diffPause = 0;
     if (!!task.pause) {
       for (let i = 1; i < task.pause.length; i += 2) {
-        difPause +=
+        diffPause +=
           ((task.pause[i] as firebase.firestore.Timestamp).toMillis()
-          - (task.pause[i - 1] as firebase.firestore.Timestamp).toMillis());
+            - (task.pause[i - 1] as firebase.firestore.Timestamp).toMillis());
       }
     }
 
-    const date = new Date(dif - difPause);
-    date.setHours(date.getUTCHours());
-    date.setMinutes(date.getUTCMinutes());
-    date.setSeconds(date.getUTCSeconds());
-    task.duration = date;
-    return task;
+    const duration = new Date(diff - diffPause);
+    duration.setHours(duration.getUTCHours());
+    duration.setMinutes(duration.getUTCMinutes());
+    duration.setSeconds(duration.getUTCSeconds());
+    return duration;
+  }
+
+  countDurationForTask(task: LogTime): Date {
+    if (!task.stop) {
+      return null;
+    }
+    return this.countDuration(task);
+  }
+
+  countDurationForTimer(task: LogTime): Date {
+    const cloneTask: LogTime = {name: null, start: null};
+    Object.assign(cloneTask, task);
+    const now = Date.now();
+    if (!!cloneTask.pause && cloneTask.pause.length % 2 !== 0) {
+      cloneTask.pause = cloneTask.pause.slice();
+      cloneTask.pause[cloneTask.pause.length] = firebase.firestore.Timestamp.fromMillis(now);
+    }
+    return this.countDuration(cloneTask);
   }
 }

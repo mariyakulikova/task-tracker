@@ -1,5 +1,5 @@
 import {LogTime} from '../interfaces/logTime';
 
 export class CurrentRunningTask {
-  static task: LogTime;
+  static task: LogTime = null;
 }

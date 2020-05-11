@@ -45,13 +45,13 @@
     </div>
   </form>
   <div class="message" >
-    <div *ngIf="ifControlInvalid('name') && hasError('name', 'required')">task name is required</div>
-    <div *ngIf="ifControlInvalid('start') && hasError('start', 'required')">start field is required</div>
-    <div *ngIf="ifControlInvalid('start') && hasError('start', 'startError')">start cannot be latter then {{getPauseForStartError()}}</div>
-    <div *ngIf="ifControlInvalid('stop') && hasError('stop', 'required')">stop field is required</div>
-    <div *ngIf="ifControlInvalid('stop') && hasError('stop', 'stopError')">stop cannot be earlier then {{getPauseForStopError()}}</div>
-    <div *ngIf="ifControlInvalid('date') && hasError('date', 'dateValidator')">date field is required and cannot be bigger then today</div>
-    <div *ngIf="ifFormInvalid()">start cannot be latter then stop</div>
+    <div class="message_text" *ngIf="ifControlInvalid('name') && hasError('name', 'required')">task name is required</div>
+    <div class="message_text" *ngIf="ifControlInvalid('start') && hasError('start', 'required')">start field is required</div>
+    <div class="message_text" *ngIf="ifControlInvalid('start') && hasError('start', 'startError')">start cannot be latter then {{getPauseForStartError()}}</div>
+    <div class="message_text" *ngIf="ifControlInvalid('stop') && hasError('stop', 'required')">stop field is required</div>
+    <div class="message_text" *ngIf="ifControlInvalid('stop') && hasError('stop', 'stopError')">stop cannot be earlier then {{getPauseForStopError()}}</div>
+    <div class="message_text" *ngIf="ifControlInvalid('date') && hasError('date', 'dateValidator')">date field is required and cannot be bigger then today</div>
+    <div class="message_text" *ngIf="ifFormInvalid()">start cannot be latter then stop</div>
   </div>
 </div>
 

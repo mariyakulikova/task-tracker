@@ -19,7 +19,7 @@
   </div>
   <div *ngIf="!loading; else loader">
     <div class="total">Daily total: {{totalHours | date:'HH:mm'}}</div>
-    <div class="container_task task" *ngFor="let task of tasks; index as j" >
+    <div class="container_task task" *ngFor="let task of tasks; index as j">
       <div class="content">
         <div class="text" (click)="onClick(j)">
           <div class="task_name">{{task.name}}</div>
@@ -27,16 +27,24 @@
         </div>
         <div class="task_duration">{{task.duration | date:'HH:mm'}}</div>
         <div class="buttons">
-          <div class="button" [routerLink]="['/edit/' + task.id]">
-                <span class="material-icons">
-                  edit
-                </span>
-          </div>
           <div class="button" (click)="onDelete(task.id, j)">
                 <span class="material-icons">
                   delete_forever
                 </span>
           </div>
+          <div *ngIf="task.stop; else timer" class="button" [routerLink]="['/edit/' + task.id]">
+                <span class="material-icons">
+                  edit
+                </span>
+          </div>
+          <ng-template #timer>
+            <div class="button" [routerLink]="['/timer']">
+            <span class="material-icons">
+              timer
+            </span>
+            </div>
+          </ng-template>
+
         </div>
       </div>
       <div class="hidden_content">
@@ -57,6 +65,11 @@
     </div>
   </div>
   <ng-template #loader>
-    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+    <div class="lds-ellipsis">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
   </ng-template>
 </div>>
