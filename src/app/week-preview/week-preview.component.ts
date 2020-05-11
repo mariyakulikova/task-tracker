@@ -6,6 +6,8 @@ import {Subject} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {FormControl, FormGroup} from '@angular/forms';
 import * as firebase from 'firebase';
+import {CurrentRunningTask} from '../timer/current.running.task';
+import {UtilityService} from '../servises/utility.service';
 
 @Component({
   selector: 'app-week-preview',
@@ -27,7 +29,10 @@ export class WeekPreviewComponent implements OnInit, OnDestroy {
   private isClickedArr: boolean[] = [];
   private lastRunning: Subscription = null;
 
-  constructor(private firestore: FirestoreService) {
+  constructor(
+    private firestore: FirestoreService,
+    private utility: UtilityService
+  ) {
   }
 
   ngOnInit(): void {
@@ -77,7 +82,7 @@ export class WeekPreviewComponent implements OnInit, OnDestroy {
     this.isClickedArr[index] = !this.isClickedArr[index];
   }
 
-  getStyle(key: number, index: number): {[key: string]: string} {
+  getStyle(key: number, index: number): { [key: string]: string } {
     const arr = this.widthMap.get(key);
     return {
       width: arr[index],
@@ -96,6 +101,10 @@ export class WeekPreviewComponent implements OnInit, OnDestroy {
       .subscribe(value => {
         this.tasks.splice(0, this.tasks.length);
         value.forEach(v => {
+          if (!v.hasOwnProperty('stop')) {
+            v = this.processUnfinishedTask(v);
+          }
+          v = this.utility.countDuration(v);
           this.tasks.push(v);
         });
         this.countTotalHours();
@@ -114,10 +123,22 @@ export class WeekPreviewComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.tasks.forEach(task => {
+    for (const task of this.tasks) {
+      if (!task.duration) {
+        continue;
+      }
       countHours += task.duration.getHours();
       countMinutes += task.duration.getMinutes();
-    });
+    }
+
+    // for (let i = 0; i < this.tasks.length; i++) {
+    //   if (!this.tasks[i].duration) {
+    //     continue;
+    //   }
+    //   countHours += this.tasks[i].duration.getHours();
+    //   countMinutes += this.tasks[i].duration.getMinutes();
+    // }
+
     this.totalHours = new Date(countHours);
     this.totalHours.setHours(countHours);
     this.totalHours.setMinutes(countMinutes);
@@ -129,25 +150,42 @@ export class WeekPreviewComponent implements OnInit, OnDestroy {
 
   private setupWidthMap() {
     this.tasks.forEach((task, i) => {
-      const widthArr = this.countWidthArr(task);
-      this.widthMap.set(i, widthArr);
+        const widthArr = this.countWidthArr(task);
+        this.widthMap.set(i, widthArr);
       }
     );
   }
 
   private countWidthArr(task: LogTime): string[] {
     const result = [];
-    const total = (task.stop as firebase.firestore.Timestamp).toMillis() - (task.start as firebase.firestore.Timestamp).toMillis();
-    if (!task.pause) {
+    if ((!task.stop && !task.pause) || !task.pause) {
       result.push(100 + '%');
       return result;
     }
-    const arr = ([task.start].concat(task.pause, task.stop)) as firebase.firestore.Timestamp[];
+    const start = (task.start as firebase.firestore.Timestamp);
+    const stop = !!task.stop ? (task.stop as firebase.firestore.Timestamp) : firebase.firestore.Timestamp.now();
+    const total = stop.toMillis() - start.toMillis();
+    const arr = ([start].concat(task.pause as firebase.firestore.Timestamp[], stop));
     for (let i = 1; i < arr.length; i++) {
       const x = arr[i].toMillis() - arr[i - 1].toMillis();
       result.push(Math.ceil((x / total) * 100) + '%');
     }
     return result;
+  }
+
+  private processUnfinishedTask(task: LogTime): LogTime {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if ((task.start as firebase.firestore.Timestamp).toDate() < today) {
+      const stop = (task.start as firebase.firestore.Timestamp).toDate();
+      stop.setHours(23, 59, 59);
+      this.firestore.addStopField(task.id, stop);
+      task.stop = firebase.firestore.Timestamp.fromDate(stop);
+    } else {
+      CurrentRunningTask.task = task;
+      console.log(CurrentRunningTask.task);
+    }
+    return task;
   }
 
   ngOnDestroy(): void {

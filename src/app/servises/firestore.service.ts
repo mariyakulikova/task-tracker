@@ -5,7 +5,6 @@ import * as firebase from 'firebase/app';
 import {AuthService} from './auth.service';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
-import {UtilityService} from './utility.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +14,7 @@ export class FirestoreService {
   constructor(
     private firestore: AngularFirestore,
     private auth: AuthService,
-    private utility: UtilityService) {
+    ) {
   }
 
   converter(log: LogTime) {
@@ -79,11 +78,11 @@ export class FirestoreService {
             const task = doc.data();
             Object.assign(task, {id: doc.id});
             return task as LogTime;
-          })
-          .filter(task => task.hasOwnProperty('stop'))
-          .map(task => {
-            return this.utility.countDuration(task);
           });
+          // .filter(task => task.hasOwnProperty('stop'))
+          // .map(task => {
+          //   return this.utility.countDuration(task);
+          // });
       }));
   }
 

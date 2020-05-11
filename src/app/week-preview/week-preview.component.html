@@ -43,7 +43,8 @@
         <div class="time">
           <div class="task_time">
             <div>{{task.start.toDate() | date:'HH:mm'}}</div>
-            <div>{{task.stop.toDate() | date:'HH:mm'}}</div>
+            <div *ngIf="task.stop">{{task.stop.toDate() | date:'HH:mm'}}</div>
+            <div *ngIf="!task.stop">running...</div>
           </div>
           <div class="scale_duration">
             <div class="segment"

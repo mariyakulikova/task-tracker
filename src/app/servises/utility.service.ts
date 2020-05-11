@@ -16,10 +16,14 @@ export class UtilityService {
   }
 
   countDuration(task: LogTime): LogTime {
-    let dif = 0;
-    if (task.start instanceof firebase.firestore.Timestamp && task.stop instanceof firebase.firestore.Timestamp) {
-      dif = task.stop.toMillis() - task.start.toMillis();
+    let dif: number;
+    if (!task.stop) {
+      task.duration = null;
+      return task;
     }
+    const start = task.start as firebase.firestore.Timestamp;
+    const stop = task.stop as firebase.firestore.Timestamp;
+    dif = stop.toMillis() - start.toMillis();
 
     let difPause = 0;
     if (!!task.pause) {
